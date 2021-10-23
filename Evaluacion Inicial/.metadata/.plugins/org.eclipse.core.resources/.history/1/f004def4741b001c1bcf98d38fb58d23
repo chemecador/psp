@@ -1,0 +1,11 @@
+package main;
+
+public class Triangulo extends Figura{
+	private double radio;
+	
+	@Override
+	public void calcularArea() {
+		super.area = radio * Math.PI * Math.PI;
+		
+	}
+}

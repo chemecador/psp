@@ -1,0 +1,14 @@
+package main;
+
+public abstract class Figura {
+	private int x;
+	private int y;
+	
+	public abstract void mover(int x, int y);
+	public abstract void dibujar();
+	
+	//trabajar conjunto de figuras
+	//figuras punto de origen
+	//figuras moverse
+	//figuras dibujarse
+}

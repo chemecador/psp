@@ -1,0 +1,10 @@
+package main;
+
+public class Domicilio {
+	private String direccion;
+	private char puerta;
+	private int piso;
+	private int CP;
+	private String localidad;
+	private String provincia;
+}

@@ -1,0 +1,8 @@
+package main;
+
+public class Coche {
+	private String marca;
+	private String modelo;
+	private String matricula;
+	private int cilindrada;
+}

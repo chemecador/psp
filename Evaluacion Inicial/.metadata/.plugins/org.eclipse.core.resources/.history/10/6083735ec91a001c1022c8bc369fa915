@@ -1,0 +1,16 @@
+package main;
+
+public class Coche {
+	private String marca;
+	private String modelo;
+	private String matricula;
+	private int cilindrada;
+	
+	public Coche() {
+		this.marca = in.nextLine();
+		this.modelo = "";
+		this.matricula = "";
+		this.cilindrada = 0;
+	}
+	
+}

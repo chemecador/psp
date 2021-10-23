@@ -1,0 +1,25 @@
+package main;
+
+public class Cuenta {
+	private Tipo tipo;
+	private double saldo;
+
+	public void depositarDinero(double saldo) {
+		this.saldo+=saldo;
+	}
+	public void retirarDinero(double saldo) {
+		if (saldo > this.saldo) {
+			System.out.println("Error, no tienes tanto dinero.");
+		}
+		else {
+			this.saldo -= saldo;
+		}
+	}
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+	
+}

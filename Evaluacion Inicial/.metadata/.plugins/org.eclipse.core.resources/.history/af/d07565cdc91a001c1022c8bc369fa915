@@ -1,0 +1,29 @@
+package main;
+
+import java.util.Scanner;
+
+public class Persona {
+	
+	Scanner in = new Scanner (System.in);	
+	private String nombre;
+	private String apellido1;
+	private String apellido2;
+	private Domicilio domicilio;
+	private int telefono;
+	private String dni;
+	private Coche coche;
+	
+	public Persona() {
+		System.out.println("Nombre: ");
+		this.nombre = in.nextLine();
+		System.out.println("Domicilio: ");
+		this.apellido1 = in.nextLine();
+		System.out.println("Apellido 2: ");
+		this.apellido2 = in.nextLine();
+		System.out.println("Domicilio: ");
+		this.domicilio = new Domicilio();
+		this.telefono = in.nextInt();
+		this.dni = in.nextLine();
+		this.coche = new Coche();
+	}
+}

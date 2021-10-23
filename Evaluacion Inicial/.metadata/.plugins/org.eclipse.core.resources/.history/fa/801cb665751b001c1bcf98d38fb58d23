@@ -1,0 +1,12 @@
+package main;
+
+public class Cuadrado extends Figura {
+	
+	private double lado;
+	
+	@Override
+	public void calcularArea() {
+		super.area = lado * lado;
+		
+	}
+}

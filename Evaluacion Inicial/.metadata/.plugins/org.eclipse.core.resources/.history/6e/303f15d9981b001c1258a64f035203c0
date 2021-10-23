@@ -1,0 +1,19 @@
+package main;
+
+public class Cuenta {
+	private Tipo tipo;
+	private double saldo;
+	public void abrirCuenta() {
+		
+	}
+	public void cerrarCuenta() {
+		
+	}
+	
+	public void depositarDinero(double saldo) {
+		this.saldo+=saldo;
+	}
+	public retirarDinero(double saldo) {
+		
+	}
+}

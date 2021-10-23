@@ -1,0 +1,53 @@
+package main;
+
+import java.util.Scanner;
+
+public class Persona {
+	
+	Scanner in = new Scanner (System.in);	
+	private String nombre;
+	private String apellido1;
+	private String apellido2;
+	private Domicilio domicilio;
+	private int telefono;
+	private String dni;
+	private Coche coche;
+	/*
+	public Persona() {
+		this.nombre = "";
+		this.apellido1 = "";
+		this.apellido2 = "";
+		this.domicilio = new Domicilio();
+		this.telefono = 0;
+		this.dni = "";
+		this.coche = new Coche();
+	}
+	public Persona(String nombre, String apellido1, String apellido2,
+			Domicilio domicilio, int telefono, String dni, Coche coche) {
+		this.nombre = nombre;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+		this.domicilio = domicilio;
+		this.telefono = telefono;
+		this.dni = dni;
+		this.coche = coche;
+	}
+	public void rellenar() {
+		System.out.println("Nombre:");
+		this.nombre = in.nextLine();
+		System.out.println("Apellido 1:");
+		this.apellido1 = in.nextLine();
+		System.out.println("Apellido2:");
+		this.apellido2 = in.nextLine();
+		this.domicilio.rellenar();
+	}*/
+	public Persona() {
+		this.nombre = in.nextLine();
+		this.apellido1 = in.nextLine();
+		this.apellido2 = in.nextLine();
+		this.domicilio = new Domicilio();
+		this.telefono = 0;
+		this.dni = "";
+		this.coche = new Coche();
+	}
+}

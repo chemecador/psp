@@ -1,0 +1,18 @@
+package main;
+
+public class Persona {
+	private String nombre;
+	private String apellido1;
+	private String apellido2;
+	private Domicilio domicilio;
+	private int telefono;
+	private String dni;
+	private Coche coche;
+	
+	public Persona() {
+		this.nombre = "";
+		this.apellido1 = "";
+		this.apellido2 = "":
+			
+	}
+}

@@ -1,0 +1,16 @@
+package main;
+
+import java.util.ArrayList;
+
+public class Banco {
+	ArrayList<Cuenta> cuentas;
+	
+	
+	public void abrirCuenta(int id, double saldo, Tipo tipo) {
+		Cuenta nuevaCuenta = new Cuenta(id,saldo,tipo);
+	}
+	public void cerrarCuenta(int id) {
+		
+	}
+	
+}

@@ -1,0 +1,75 @@
+package main;
+
+public class Domicilio {
+	private String direccion;
+	private char puerta;
+	private int piso;
+	private int CP;
+	private String localidad;
+	private String provincia;
+	
+	public Domicilio() {
+		this.direccion = "";
+		this.puerta = ' ';
+		this.piso = 0;
+		this.CP = 0;
+		this.localidad = "";
+		this.provincia = "";
+	}
+	public Domicilio(String direccion, char puerta, int piso,
+			int CP, String localidad, String provincia) {
+		this.direccion = direccion;
+		this.puerta = puerta;
+		this.piso = piso;
+		this.CP = CP;
+		this.localidad = localidad;
+		this.provincia = provincia;
+	}
+	public String getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	public char getPuerta() {
+		return puerta;
+	}
+	public void setPuerta(char puerta) {
+		this.puerta = puerta;
+	}
+	public int getPiso() {
+		return piso;
+	}
+	public void setPiso(int piso) {
+		this.piso = piso;
+	}
+	public int getCP() {
+		return CP;
+	}
+	public void setCP(int cP) {
+		CP = cP;
+	}
+	public String getLocalidad() {
+		return localidad;
+	}
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+	public String getProvincia() {
+		return provincia;
+	}
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+	public void rellenar() {
+		
+		System.out.println("Direccion=");
+		this.direccion = "";
+		this.puerta = ' ';
+		this.piso = 0;
+		this.CP = 0;
+		this.localidad = "";
+		this.provincia = "";
+	}
+	
+}
