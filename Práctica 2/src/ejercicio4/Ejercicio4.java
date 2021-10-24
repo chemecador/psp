@@ -1,14 +1,46 @@
 package ejercicio4;
 
 import java.io.*;
-import java.util.Scanner;
+
 
 class ContarPalabras extends Thread {
-    private FileReader fichero; //String que almacena la constitución
+    private BufferedReader br; //String que almacena la constitución
+    private int contador; //entero que almacena el número de palabras
+
+    //constructor
+    public ContarPalabras(BufferedReader br) {
+        this.br = br;
+        this.contador = 0;
+    }
+
+    //getter
+    public int getContador() {
+        return contador;
+    }
+
+    public void run() {
+        String linea;
+        try {
+            while ((linea = br.readLine()) != null) {  //leemos cada línea hasta el final del fichero
+                String[] palabras = linea.split(" "); //separamos cada línea por los espacios (vector de palabras)
+                if (palabras.length > 2) { //quitamos las líneas que solo contienen un salto de línea
+                    contador += palabras.length; //sumamos la palabra al contador
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer la línea en ContarPalabras");
+        }
+
+        System.out.println("Hay un total de " + this.contador + " palabras");
+    }
+}
+
+class ContarLineas extends Thread {
+    private BufferedReader br;
     private int contador;
 
-    public ContarPalabras(FileReader f) {
-        this.fichero = f;
+    public ContarLineas(BufferedReader br) {
+        this.br = br;
         this.contador = 0;
     }
 
@@ -17,46 +49,18 @@ class ContarPalabras extends Thread {
     }
 
     public void run() {
-        BufferedReader br = new BufferedReader(fichero);
-        System.out.println("Hola");
-        synchronized (getClass()) {
-            try {
-                System.out.println("Todo bien");
-                String linea = br.readLine();
-                while (linea != null) {
-                    System.out.println("bucle");
-                    this.contador++;
-                }
-            } catch (IOException e){
-                System.out.println("Error al leer la línea");
+        String linea;
+        try {
+            System.out.println(br.readLine());
+            while ((linea = br.readLine()) != null) {
+                contador++;
+                System.out.println(contador);
             }
-            getClass().notifyAll();
-            try {
-                getClass().wait();
-            } catch (InterruptedException e) {
-                System.err.println("Error en el wait");
-            }
-            getClass().notifyAll();
+        } catch (IOException e) {
+            System.out.println("Error al leer la línea en ContarLineas");
         }
+
         System.out.println("Hay un total de " + this.contador + " palabras");
-        System.out.println("Debería dar 17237");
-    }
-}
-
-class ContarLineas extends Thread {
-    private FileReader fichero;
-    private int contador;
-
-    public ContarLineas(FileReader f) {
-        this.fichero = f;
-    }
-
-    public int getContador() {
-        return contador;
-    }
-
-    public void run() {
-
     }
 
 }
@@ -152,17 +156,24 @@ public class Ejercicio4 {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ContarPalabras cp = new ContarPalabras(fichero);
-        ContarLineas cl = new ContarLineas(fichero);
+        BufferedReader br = new BufferedReader(fichero);
+        ContarPalabras cp = new ContarPalabras(br);
+        ContarLineas cl = new ContarLineas(br);
         cp.start();
         try {
             cp.join();
+            br.mark(1);
+            br.reset();
             cl.start();
-        } catch (InterruptedException e) {
+            cl.join();
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
-
-
-
+        try {
+            br.close();
+        } catch (IOException e) {
+            System.out.println("No he podido cerrar el br");
+            e.printStackTrace();
+        }
     }
 }
