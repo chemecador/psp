@@ -4,21 +4,11 @@ import java.io.*;
 
 
 class ContarPalabras extends Thread {
-    private BufferedReader br; //String que almacena la constitución
-    private int contador; //entero que almacena el número de palabras
 
-    //constructor
-    public ContarPalabras(BufferedReader br) {
-        this.br = br;
-        this.contador = 0;
-    }
-
-    //getter
-    public int getContador() {
-        return contador;
-    }
 
     public void run() {
+        BufferedReader br = Ejercicio4.leerFichero();
+        int contador = 0;
         String linea;
         try {
             while ((linea = br.readLine()) != null) {  //leemos cada línea hasta el final del fichero
@@ -29,38 +19,42 @@ class ContarPalabras extends Thread {
             }
         } catch (IOException e) {
             System.out.println("Error al leer la línea en ContarPalabras");
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        System.out.println("Hay un total de " + this.contador + " palabras");
+        System.out.println("Hay un total de " + contador + " palabras");
     }
+
 }
 
 class ContarLineas extends Thread {
-    private BufferedReader br;
-    private int contador;
 
-    public ContarLineas(BufferedReader br) {
-        this.br = br;
-        this.contador = 0;
-    }
-
-    public int getContador() {
-        return contador;
-    }
 
     public void run() {
+
+        BufferedReader br = Ejercicio4.leerFichero();
+        int contador = 0;
         String linea;
         try {
-            System.out.println(br.readLine());
             while ((linea = br.readLine()) != null) {
                 contador++;
-                System.out.println(contador);
             }
         } catch (IOException e) {
             System.out.println("Error al leer la línea en ContarLineas");
+        } finally{
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        System.out.println("Hay un total de " + this.contador + " palabras");
+        System.out.println("Hay un total de " + contador + " líneas");
     }
 
 }
@@ -128,6 +122,38 @@ class ContarRey extends Thread {
 
 public class Ejercicio4 {
 
+    public static BufferedReader leerFichero() {
+        FileReader fichero = null;
+        try {
+            fichero = new FileReader("Contitucion1812.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedReader br = new BufferedReader(fichero);
+        return br;
+    }
+
+    public static void main(String[] args) {
+        FileReader fichero = null;
+        try {
+            fichero = new FileReader("Contitucion1812.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //BufferedReader br1 = new BufferedReader(fichero);
+        //BufferedReader br2 = new BufferedReader(fichero);
+        ContarPalabras cp = new ContarPalabras();
+        ContarLineas cl = new ContarLineas();
+        cp.start();
+        try {
+            cp.join();
+            cl.start();
+            cl.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    /*
     public static String leerFichero() {
         String c = "";
         try {
@@ -148,32 +174,5 @@ public class Ejercicio4 {
         System.out.println(c);
         return c;
     }
-
-    public static void main(String[] args) {
-        FileReader fichero = null;
-        try {
-            fichero = new FileReader("Contitucion1812.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader br = new BufferedReader(fichero);
-        ContarPalabras cp = new ContarPalabras(br);
-        ContarLineas cl = new ContarLineas(br);
-        cp.start();
-        try {
-            cp.join();
-            br.mark(1);
-            br.reset();
-            cl.start();
-            cl.join();
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            br.close();
-        } catch (IOException e) {
-            System.out.println("No he podido cerrar el br");
-            e.printStackTrace();
-        }
-    }
+*/
 }
