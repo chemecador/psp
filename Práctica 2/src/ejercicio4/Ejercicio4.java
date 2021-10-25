@@ -7,7 +7,12 @@ class ContarPalabras extends Thread {
 
 
     public void run() {
-        BufferedReader br = Ejercicio4.leerFichero();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("Contitucion1812.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         int contador = 0;
         String linea;
         try {
@@ -21,7 +26,9 @@ class ContarPalabras extends Thread {
             System.out.println("Error al leer la línea en ContarPalabras");
         } finally {
             try {
-                br.close();
+                if (br != null) {
+                    br.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -37,7 +44,12 @@ class ContarLineas extends Thread {
 
     public void run() {
 
-        BufferedReader br = Ejercicio4.leerFichero();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("Contitucion1812.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         int contador = 0;
         String linea;
         try {
@@ -46,9 +58,11 @@ class ContarLineas extends Thread {
             }
         } catch (IOException e) {
             System.out.println("Error al leer la línea en ContarLineas");
-        } finally{
+        } finally {
             try {
-                br.close();
+                if (br != null) {
+                    br.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -60,119 +74,206 @@ class ContarLineas extends Thread {
 }
 
 class ContarTitulos extends Thread {
-    private String c;
-
-    public ContarTitulos(String c) {
-        this.c = c;
-    }
-
     public void run() {
-
+        BufferedReader br = null;
+        int contador = 0;
+        try {
+            br = new BufferedReader(new FileReader("Contitucion1812.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String linea;
+        try {
+            while ((linea = br.readLine()) != null) {
+                String[] palabras = linea.split(" "); //separamos cada línea por los espacios (vector de palabras)
+                for (int i = 0; i < palabras.length; i++) {
+                    if (palabras[i].equalsIgnoreCase("TITULO")) {
+                        contador++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer la línea en ContarTitulos");
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Hay un total de " + contador + " títulos");
     }
 }
 
 class ContarArticulos extends Thread {
-    private String c;
-
-    public ContarArticulos(String c) {
-        this.c = c;
-    }
 
     public void run() {
-
+        BufferedReader br = null;
+        int contador = 0;
+        try {
+            br = new BufferedReader(new FileReader("Contitucion1812.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String linea;
+        try {
+            while ((linea = br.readLine()) != null) {
+                String[] palabras = linea.split(" "); //separamos cada línea por los espacios (vector de palabras)
+                for (int i = 0; i < palabras.length; i++) {
+                    if (palabras[i].equalsIgnoreCase("ARTICULO")) {
+                        contador++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer la línea en ContarArticulos");
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Hay un total de " + contador + " artículos");
     }
 }
 
 class ContarCapitulos extends Thread {
-    private String c;
-
-    public ContarCapitulos(String c) {
-        this.c = c;
-    }
 
     public void run() {
-
+        BufferedReader br = null;
+        int contador = 0;
+        try {
+            br = new BufferedReader(new FileReader("Contitucion1812.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String linea;
+        try {
+            while ((linea = br.readLine()) != null) {
+                String[] palabras = linea.split(" "); //separamos cada línea por los espacios (vector de palabras)
+                for (int i = 0; i < palabras.length; i++) {
+                    if (palabras[i].equalsIgnoreCase("CAPITULO")) {
+                        contador++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer la línea en ContarArticulos");
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Hay un total de " + contador + " capítulos");
     }
 }
 
 class ContarConstitucion extends Thread {
-    private String c;
-
-    public ContarConstitucion(String c) {
-        this.c = c;
-    }
 
     public void run() {
-
+        BufferedReader br = null;
+        int contador = 0;
+        try {
+            br = new BufferedReader(new FileReader("Contitucion1812.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String linea;
+        try {
+            while ((linea = br.readLine()) != null) {
+                String[] palabras = linea.split(" "); //separamos cada línea por los espacios (vector de palabras)
+                for (int i = 0; i < palabras.length; i++) {
+                    if (palabras[i].equalsIgnoreCase("CONSTITUCION")) {
+                        contador++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer la línea en ContarArticulos");
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("La palabra \"constitucion\" se nombra " + contador + " veces");
     }
 }
 
 class ContarRey extends Thread {
-    private String c;
-
-    public ContarRey(String c) {
-        this.c = c;
-    }
-
     public void run() {
+        BufferedReader br = null;
         int contador = 0;
-
+        try {
+            br = new BufferedReader(new FileReader("Contitucion1812.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String linea;
+        try {
+            while ((linea = br.readLine()) != null) {
+                String[] palabras = linea.split(" "); //separamos cada línea por los espacios (vector de palabras)
+                for (int i = 0; i < palabras.length; i++) {
+                    if (palabras[i].equalsIgnoreCase("REY")) {
+                        contador++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer la línea en ContarArticulos");
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("La palabra \"rey\" se nombra " + contador + " veces");
     }
 }
 
 public class Ejercicio4 {
 
-    public static BufferedReader leerFichero() {
-        FileReader fichero = null;
-        try {
-            fichero = new FileReader("Contitucion1812.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader br = new BufferedReader(fichero);
-        return br;
-    }
-
     public static void main(String[] args) {
-        FileReader fichero = null;
-        try {
-            fichero = new FileReader("Contitucion1812.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //BufferedReader br1 = new BufferedReader(fichero);
-        //BufferedReader br2 = new BufferedReader(fichero);
+
         ContarPalabras cp = new ContarPalabras();
         ContarLineas cl = new ContarLineas();
+        ContarTitulos ct = new ContarTitulos();
+        ContarArticulos ca = new ContarArticulos();
+        ContarCapitulos cca = new ContarCapitulos();
+        ContarConstitucion cco = new ContarConstitucion();
+        ContarRey cr = new ContarRey();
         cp.start();
         try {
             cp.join();
             cl.start();
             cl.join();
+            ct.start();
+            ct.join();
+            ca.start();
+            ca.join();
+            cca.start();
+            cca.join();
+            cco.start();
+            cco.join();
+            cr.start();
+            cr.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-    /*
-    public static String leerFichero() {
-        String c = "";
-        try {
-            BufferedReader br = new BufferedReader(
-                    new FileReader("Contitucion1812.txt"));
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                c += linea;
-                c += '\n';
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("Error al leer el archivo");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("Error al leer la línea");
-            e.printStackTrace();
-        }
-        System.out.println(c);
-        return c;
-    }
-*/
 }
