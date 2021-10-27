@@ -26,16 +26,11 @@ class Hilo1 extends Thread {
     public void run() {
         try {
             Thread.currentThread().sleep(2000); //duerme el hilo durante 2s
-        } catch (InterruptedException e) {
-            System.err.println("Error en el primer sleep de la primera operación");
-        }
-        this.resultado = (x + y) * 2 - (4 * x + 3 * y - 2 * z);
-        System.out.println("El resultado 1 es: " + this.resultado);
-
-        try {
+            this.resultado = (x + y) * 2 - (4 * x + 3 * y - 2 * z);
+            System.out.println("El resultado 1 es: " + this.resultado);
             Thread.currentThread().sleep(2000);
         } catch (InterruptedException e) {
-            System.err.println("Error en el segundo sleep de la primera operación");
+            System.err.println("Error en el sleep de la primera operación");
         }
     }
 
@@ -60,16 +55,11 @@ class Hilo2 extends Thread {
     public void run() {
         try {
             Thread.currentThread().sleep(2000);
-        } catch (InterruptedException e) {
-            System.err.println("Error en el primer sleep de la segunda operación");
-        }
-        this.resultado = (5 * z - 7 * y + x * 2) * 2 - (4 * x + 3 * y - 8 * z) * 2;
-        System.out.println("El resultado 2 es " + this.resultado);
-
-        try {
+            this.resultado = (5 * z - 7 * y + x * 2) * 2 - (4 * x + 3 * y - 8 * z) * 2;
+            System.out.println("El resultado 2 es " + this.resultado);
             Thread.currentThread().sleep(2000);
         } catch (InterruptedException e) {
-            System.err.println("Error en el segundo sleep de la segunda operación");
+            System.err.println("Error en el sleep de la segunda operación");
         }
     }
 

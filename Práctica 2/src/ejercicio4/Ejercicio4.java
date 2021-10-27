@@ -7,11 +7,10 @@ class ContarPalabras extends Thread {
 
 
     public void run() {
-        int contador = -1; //si al finalizar el programa sigue siendo -1, ha habido un error
 
         //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
-            contador = 0; //lo ha leído con éxito, ponemos el contador a 0
+            int contador = 0; //inicializar el contador de palabras
             String linea;
             while ((linea = br.readLine()) != null) {  //leemos cada línea hasta el final del fichero
                 String[] palabras = linea.split(" "); //separamos cada línea por los espacios (vector de palabras)
@@ -19,13 +18,13 @@ class ContarPalabras extends Thread {
                     contador += palabras.length; //sumamos la palabra al contador
                 }
             }
+            System.out.println("Hay un total de " + contador + " palabras");
         } catch (FileNotFoundException e) {
             System.err.println("No se encuentra el archivo");
         } catch (IOException e) {
             System.err.println("Error al leer la línea en ContarPalabras");
         }
 
-        System.out.println("Hay un total de " + contador + " palabras");
     }
 
 }
@@ -34,28 +33,28 @@ class ContarLineas extends Thread {
 
 
     public void run() {
-        int contador = -1;
+        //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
-            contador = 0;
+            int contador = 0; //inicializar el contador de palabras
             String linea;
             while ((linea = br.readLine()) != null) {
                 contador++; //sumamos 1 al contador por cada línea que lee
             }
+            System.out.println("Hay un total de " + contador + " líneas");
         } catch (FileNotFoundException e) {
             System.err.println("No se encuentra el archivo");
         } catch (IOException e) {
             System.err.println("Error al leer la línea en ContarLíneas");
         }
-        System.out.println("Hay un total de " + contador + " líneas");
     }
 
 }
 
 class ContarTitulos extends Thread {
     public void run() {
-        int contador = -1;
+        //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
-            contador = 0;
+            int contador = 0; //inicializar el contador de palabras
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] palabras = linea.split(" ");
@@ -65,12 +64,12 @@ class ContarTitulos extends Thread {
                     }
                 }
             }
+            System.out.println("Hay un total de " + contador + " títulos");
         } catch (FileNotFoundException e) {
             System.err.println("No se encuentra el archivo");
         } catch (IOException e) {
             System.err.println("Error al leer la línea en ContarTítulos");
         }
-        System.out.println("Hay un total de " + contador + " títulos");
     }
 }
 
@@ -78,95 +77,96 @@ class ContarArticulos extends Thread {
 
     public void run() {
 
-        int contador = -1;
+        //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
-            contador = 0;
+            int contador = 0; //inicializar el contador de palabras
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] palabras = linea.split(" ");
                 for (int i = 0; i < palabras.length; i++) {
                     if (palabras[i].equalsIgnoreCase("ARTICULO")) {
-                        contador++;
+                        contador++; //suma 1 al contador cada vez que encuentra la palabra "articulo"
                     }
                 }
             }
+            System.out.println("Hay un total de " + contador + " artículos");
         } catch (FileNotFoundException e) {
             System.err.println("No se encuentra el archivo");
         } catch (IOException e) {
             System.err.println("Error al leer la línea en ContarArtículos");
         }
-        System.out.println("Hay un total de " + contador + " artículos");
+
     }
 }
 
 class ContarCapitulos extends Thread {
 
     public void run() {
-        int contador = -1;
+        //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
-            contador = 0;
+            int contador = 0; //inicializar el contador de palabras
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] palabras = linea.split(" ");
                 for (int i = 0; i < palabras.length; i++) {
                     if (palabras[i].equalsIgnoreCase("CAPITULO")) {
-                        contador++;
+                        contador++; //suma 1 al contador cada vez que encuentra la palabra "capitulo"
                     }
                 }
             }
+            System.out.println("Hay un total de " + contador + " capítulos");
         } catch (FileNotFoundException e) {
             System.err.println("No se encuentra el archivo");
         } catch (IOException e) {
             System.err.println("Error al leer la línea en ContarCapítulos");
         }
-        System.out.println("Hay un total de " + contador + " capítulos");
     }
 }
 
 class ContarConstitucion extends Thread {
 
     public void run() {
-        int contador = -1;
+        //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
-            contador = 0;
+            int contador = 0; //inicializar el contador de palabras
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] palabras = linea.split(" ");
                 for (int i = 0; i < palabras.length; i++) {
                     if (palabras[i].equalsIgnoreCase("CONSTITUCION")) {
-                        contador++;
+                        contador++; //suma 1 al contador cada vez que encuentra la palabra "constitucion"
                     }
                 }
             }
+            System.out.println("La palabra \"constitucion\" se nombra " + contador + " veces");
         } catch (FileNotFoundException e) {
             System.err.println("No se encuentra el archivo");
         } catch (IOException e) {
             System.err.println("Error al leer la línea en ContarConstitucion");
         }
-        System.out.println("La palabra \"constitucion\" se nombra " + contador + " veces");
     }
 }
 
 class ContarRey extends Thread {
     public void run() {
-        int contador = -1;
+        //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
-            contador = 0;
+            int contador = 0; //inicializar el contador de palabras
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] palabras = linea.split(" ");
                 for (int i = 0; i < palabras.length; i++) {
                     if (palabras[i].equalsIgnoreCase("REY")) {
-                        contador++;
+                        contador++; //suma 1 al contador cada vez que encuentra la palabra "rey"
                     }
                 }
             }
+            System.out.println("La palabra \"rey\" se nombra " + contador + " veces");
         } catch (FileNotFoundException e) {
             System.err.println("No se encuentra el archivo");
         } catch (IOException e) {
             System.err.println("Error al leer la línea en ContarRey");
         }
-        System.out.println("La palabra \"rey\" se nombra " + contador + " veces");
     }
 }
 
@@ -174,30 +174,35 @@ public class Ejercicio4 {
 
     public static void main(String[] args) {
 
+        //creación los hilos
         ContarPalabras cp = new ContarPalabras();
         ContarLineas cl = new ContarLineas();
         ContarTitulos ct = new ContarTitulos();
         ContarArticulos ca = new ContarArticulos();
         ContarCapitulos cca = new ContarCapitulos();
         ContarConstitucion cco = new ContarConstitucion();
+
         ContarRey cr = new ContarRey();
+
+        //inicio de hilos
         cp.start();
+        cl.start();
+        ct.start();
+        ca.start();
+        cca.start();
+        cco.start();
+        cr.start();
         try {
+            //esperar a que acaben para que se muestre ordenado
             cp.join();
-            cl.start();
             cl.join();
-            ct.start();
             ct.join();
-            ca.start();
             ca.join();
-            cca.start();
             cca.join();
-            cco.start();
             cco.join();
-            cr.start();
             cr.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.err.println("Error en el join");
         }
     }
 }
