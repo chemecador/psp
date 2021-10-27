@@ -2,6 +2,7 @@ package ejercicio3;
 
 import java.util.Scanner;
 
+//Clase que realiza la primera operación
 class Hilo1 extends Thread {
 
     private int x;
@@ -26,7 +27,7 @@ class Hilo1 extends Thread {
     public void run() {
         try {
             Thread.currentThread().sleep(2000); //duerme el hilo durante 2s
-            this.resultado = (x + y) * 2 - (4 * x + 3 * y - 2 * z);
+            this.resultado = (x + y) * 2 - (4 * x + 3 * y - 2 * z); //realizar la operación
             System.out.println("El resultado 1 es: " + this.resultado);
             Thread.currentThread().sleep(2000);
         } catch (InterruptedException e) {
@@ -36,6 +37,7 @@ class Hilo1 extends Thread {
 
 }
 
+//Clase que realiza la segunda operación
 class Hilo2 extends Thread {
     private int x;
     private int y;
@@ -64,7 +66,7 @@ class Hilo2 extends Thread {
     }
 
 }
-
+//Clase que realiza la suma de las dos operaciones
 class Hilo3 extends Thread {
 
     private int a;
@@ -80,6 +82,7 @@ class Hilo3 extends Thread {
     }
 }
 
+//Clase principal
 public class Ejercicio3 {
     public static void main(String[] args) {
         int x = 0, y = 0, z = 0;
@@ -103,14 +106,19 @@ public class Ejercicio3 {
             }
         }
 
+        //declaración de hilos
         Hilo1 t1 = new Hilo1(x, y, z);
         Hilo2 t2 = new Hilo2(x, y, z);
         Hilo3 t3;
+        //inicio de hilos
         t1.start();
         t2.start();
         try {
-            t1.join(); //espera a que acabe el hilo 1
+            //esperar a que terminen los hilos 1 y 2
+            t1.join();
             t2.join();
+
+            //cuando han terminado, comienza el hilo 3
             t3 = new Hilo3(t1.getResultado(), t2.getResultado());
             t3.start();
         } catch (InterruptedException e) {

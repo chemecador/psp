@@ -2,9 +2,8 @@ package ejercicio4;
 
 import java.io.*;
 
-
+//Clase que cuenta el número de palabras del fichero "Contitucion1812.txt"
 class ContarPalabras extends Thread {
-
 
     public void run() {
 
@@ -29,8 +28,8 @@ class ContarPalabras extends Thread {
 
 }
 
+//Clase que cuenta el número de líneas del fichero "Contitucion1812.txt"
 class ContarLineas extends Thread {
-
 
     public void run() {
         //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
@@ -50,8 +49,11 @@ class ContarLineas extends Thread {
 
 }
 
+//Clase que cuenta el número de títulos del fichero "Contitucion1812.txt"
 class ContarTitulos extends Thread {
+
     public void run() {
+
         //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {
             int contador = 0; //inicializar el contador de palabras
@@ -73,6 +75,7 @@ class ContarTitulos extends Thread {
     }
 }
 
+//Clase que cuenta el número de artículs del fichero "Contitucion1812.txt"
 class ContarArticulos extends Thread {
 
     public void run() {
@@ -99,6 +102,7 @@ class ContarArticulos extends Thread {
     }
 }
 
+//Clase que cuenta el número de capítulos del fichero "Contitucion1812.txt"
 class ContarCapitulos extends Thread {
 
     public void run() {
@@ -123,6 +127,7 @@ class ContarCapitulos extends Thread {
     }
 }
 
+//Clase que cuenta el número de veces que aparece la palabra "Constitucion" en el fichero "Contitucion1812.txt"
 class ContarConstitucion extends Thread {
 
     public void run() {
@@ -147,7 +152,9 @@ class ContarConstitucion extends Thread {
     }
 }
 
+//Clase que cuenta el número de veces que aparece la palabra "Constitucion" en el fichero "Contitucion1812.txt"
 class ContarRey extends Thread {
+
     public void run() {
         //intentamos leer del fichero y cierra el BufferedReader cuando lo consigue
         try (BufferedReader br = new BufferedReader(new FileReader("Contitucion1812.txt"));) {

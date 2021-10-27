@@ -32,10 +32,20 @@ public class Ejercicio5 {
         Boolean seguir = true; //booleano que controla si se debe salir del bucle
 
         while (seguir) {
+            try {
+                /* La primera vez, espera 5ms para asegurar que han empezado todos los hilos.
+                 * Las siguientes veces que entre al while,
+                 * duerme el proceso para no saturar la CPU mientras espera a que terminen los hilos */
+                Thread.currentThread().sleep(5);
+            } catch (InterruptedException e) {
+                System.out.println("Error en el sleep");
+                e.printStackTrace();
+            }
             seguir = false; //por defecto, no hay que seguir
             for (int i = 0; i < CANTIDAD_DADOS; i++) {
                 if (dados[i].isAlive()) {
                     seguir = true; //queda algún hilo vivo, hay que seguir
+
                 }
             }
         }

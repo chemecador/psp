@@ -3,16 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="16f3b279-37ae-42bb-b22e-0bbb4804ac6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Ejercicio3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Ejercicio3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Hilo1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Hilo1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Hilo2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Hilo2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Hilo3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio3/Hilo3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarArticulos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarArticulos.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarCapitulos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarCapitulos.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarConstitucion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarConstitucion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarLineas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarLineas.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarPalabras.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarPalabras.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarRey.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarRey.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarTitulos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/ContarTitulos.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/Ejercicio4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio4/Ejercicio4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio5/Dado.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio5/Dado.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio5/Ejercicio5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio5/Ejercicio5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ejercicio2/Ejercicio2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio2/Ejercicio2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ejercicio3/Ejercicio3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio3/Ejercicio3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ejercicio4/Ejercicio4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio4/Ejercicio4.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ejercicio5/Ejercicio5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio5/Ejercicio5.java" afterDir="false" />
@@ -67,7 +70,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Ejercicio4">
+  <component name="RunManager" selected="Application.Ejercicio2">
     <configuration name="Ejercicio1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ejercicio1.Ejercicio1" />
       <module name="Práctica 2" />
@@ -135,9 +138,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Ejercicio4" />
-        <item itemvalue="Application.Ejercicio5" />
         <item itemvalue="Application.Ejercicio2" />
+        <item itemvalue="Application.Ejercicio5" />
+        <item itemvalue="Application.Ejercicio4" />
         <item itemvalue="Application.Ejercicio2 (1)" />
         <item itemvalue="Application.Ejercicio1" />
       </list>
@@ -163,6 +166,7 @@
       <workItem from="1635077757138" duration="69000" />
       <workItem from="1635105741540" duration="5506000" />
       <workItem from="1635143665569" duration="10096000" />
+      <workItem from="1635324985302" duration="2224000" />
     </task>
     <servers />
   </component>
