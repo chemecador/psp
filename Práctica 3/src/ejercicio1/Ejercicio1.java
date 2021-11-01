@@ -1,34 +1,66 @@
 package ejercicio1;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Observable;
+import java.util.Observer;
 
-class Notificacion{
-    private static Notificacion notificacion = new Notificacion();
+class Observado extends Observable {
+    private static Observado notificacion = new Observado();
     String titulo;
-    LocalDateTime hora;
 
-    private Notificacion(){
+    private Observado() {
 
     }
-    private Notificacion(String titulo, LocalDateTime hora){
+
+    private Observado(String titulo) {
         this.titulo = titulo;
-        this.hora = hora;
     }
-    public static Notificacion getInstance(){
-        if (notificacion == null){
-            notificacion = new Notificacion();
+
+    public static Observado getInstance() {
+        if (notificacion == null) {
+            notificacion = new Observado();
         }
         return notificacion;
     }
+
+    public void notificar(String titulo) {
+        this.titulo = titulo;
+        //Marcamos el objeto observable como objeto que ha cambiado
+        setChanged();
+        //Notificamos a los observadores y le enviamos el nuevo valor
+        notifyObservers(titulo);
+        //notifyObservers(); Este metodo solo notifica que hubo cambios en el objeto
+    }
+
+
 }
 
+class Observador implements Observer {
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("Nuevo título de la entrada del blog: \"" + arg + "\", actualizado el " + LocalDate.now() +
+                " a las " + LocalTime.now());
+    }
+}
 
 public class Ejercicio1 {
-    /*Se deberá de realizar una aplicación que realice notificaciones a tres clientes cuando exista una
-notificación en las redes sociales. Estas notificaciones deberán de informar del título de la nueva
-entrada en el blog. Cuando se reciba un correo electrónico se deberá indicar la fecha
-(día-mesaño) y la hora (hora:minutos) en la que se ha recibido. */
+    public static void main(String[] args) {
+        Observado observado = Observado.getInstance();
 
+        Observador cliente1 = new Observador();
+        Observador cliente2 = new Observador();
+        Observador cliente3 = new Observador();
+
+        observado.addObserver(cliente1);
+        observado.addObserver(cliente2);
+        observado.addObserver(cliente3);
+
+
+        observado.notificar("Cómo aprobar PSP");
+
+    }
 
 
 }
