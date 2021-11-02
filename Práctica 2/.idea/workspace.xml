@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16f3b279-37ae-42bb-b22e-0bbb4804ac6f" name="Default Changelist" comment="" />
+    <list default="true" id="16f3b279-37ae-42bb-b22e-0bbb4804ac6f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../GataAlejandro/GataAlejandro.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../GataAlejandro/src/ejercicio1/Ejercicio1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../GataAlejandro/src/ejercicio2/Ejercicio2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Práctica 1/.idea/Práctica 1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Práctica 1/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Práctica 1/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Práctica 1/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Práctica 1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio2/Ejercicio2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Práctica 2/ejercicio2/Ejercicio2.class" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +35,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Práctica 1" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -52,7 +63,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Ejercicio2">
+  <component name="RunManager" selected="Application.Ejercicio1">
     <configuration name="Ejercicio1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ejercicio1.Ejercicio1" />
       <module name="Práctica 2" />
@@ -120,11 +131,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Ejercicio1" />
         <item itemvalue="Application.Ejercicio2" />
         <item itemvalue="Application.Ejercicio5" />
         <item itemvalue="Application.Ejercicio4" />
         <item itemvalue="Application.Ejercicio2 (1)" />
-        <item itemvalue="Application.Ejercicio1" />
       </list>
     </recent_temporary>
   </component>
@@ -151,6 +162,7 @@
       <workItem from="1635324985302" duration="2224000" />
       <workItem from="1635401937322" duration="10000" />
       <workItem from="1635536157284" duration="557000" />
+      <workItem from="1635848285986" duration="1837000" />
     </task>
     <servers />
   </component>
