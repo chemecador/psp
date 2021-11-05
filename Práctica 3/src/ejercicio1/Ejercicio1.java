@@ -5,6 +5,9 @@ import java.time.LocalTime;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Clase observada que contiene una única instancia, con el título de la entrada del blog.
+ * */
 class Observado extends Observable {
     private static Observado notificacion = new Observado(); //instancia única
     String titulo; //título de la entrada del blog
@@ -32,7 +35,9 @@ class Observado extends Observable {
 
 
 }
-
+/**
+ * Clase observadora que contiene el mensaje que le llega a las personas que están suscritas al blog.
+ * */
 class Observador implements Observer {
 
     //método que salta cuando hay un cambio en el objeto observado
@@ -42,7 +47,10 @@ class Observador implements Observer {
                 " a las " + LocalTime.now());
     }
 }
-
+/**
+ * Clase principal. Contiene el main
+ *
+ * */
 public class Ejercicio1 {
     public static void main(String[] args) {
 
@@ -62,6 +70,4 @@ public class Ejercicio1 {
         observado.notificar("Cómo aprobar PSP");
 
     }
-
-
 }

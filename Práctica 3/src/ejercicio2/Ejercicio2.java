@@ -5,6 +5,10 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
+/**
+ * Clase observada abstracta. Contiene el resultado de la operación y la excepción que salta.
+ * Las hijas que hereden de ella, deben implementar su correspondiente cálculo.
+ */
 abstract class Observado extends Observable {
     String excepcion; //excepción que ha saltado
     private double resultado; //resultado de la operación
@@ -23,6 +27,9 @@ abstract class Observado extends Observable {
     public abstract void calcular();
 }
 
+/**
+ * Clase Suma que hereda de la clase Observado. Contiene una suma.
+ */
 class Suma extends Observado {
 
     //se crea una instancia
@@ -62,6 +69,9 @@ class Suma extends Observado {
     }
 }
 
+/**
+ * Clase Resta que hereda de la clase Observado. Contiene una resta.
+ */
 class Resta extends Observado {
 
     //ídem que la suma
@@ -99,6 +109,9 @@ class Resta extends Observado {
     }
 }
 
+/**
+ * Clase Multiplicacion que hereda de la clase Observado. Contiene una multiplicación.
+ */
 class Multiplicacion extends Observado {
     //ídem que las anteriores
     private static Multiplicacion multiplicacion = new Multiplicacion();
@@ -135,6 +148,9 @@ class Multiplicacion extends Observado {
     }
 }
 
+/**
+ * Clase Potencia que hereda de la clase Observado. Contiene una potencia.
+ */
 class Potencia extends Observado {
     //ídem que las anteriores
     private static Potencia potencia = new Potencia();
@@ -170,6 +186,9 @@ class Potencia extends Observado {
     }
 }
 
+/**
+ * Clase RaizCuadrada que hereda de la clase Observado. Contiene una raíz cuadrada.
+ */
 class RaizCuadrada extends Observado {
     //ídem que las anteriores
     private static RaizCuadrada raiz = new RaizCuadrada();
@@ -215,7 +234,9 @@ class RaizCuadrada extends Observado {
     }
 }
 
-
+/**
+ * Clase observadora que contiene un único índice para distinguir a los aparatos.
+ */
 class Observador implements Observer {
 
     private int i; //índice del observador
@@ -239,6 +260,9 @@ class Observador implements Observer {
     }
 }
 
+/**
+ * Clase principal. Contiene el main
+ */
 public class Ejercicio2 {
 
     public static void main(String[] args) {
@@ -266,17 +290,35 @@ public class Ejercicio2 {
             potencia.addObserver(observador);
             raiz.addObserver(observador);
         }
-        /***************************************************************
-         * ¡IMPORTANTE!
-         * DESCOMENTAR EL MÉTODO DEL QUE SE QUIERA REALIZAR LA OPERACIÓN
-         *
-         ****************************************************************/
 
-        suma.calcular();
-        //resta.calcular();
-        //multiplicacion.calcular();
-        //potencia.calcular();
-        //raiz.calcular();
+        //menú para interactuar con el usuario
+        System.out.println("¿Qué operación deseas realizar?");
+        System.out.println("1. Suma\n2. Resta\n3. Multiplicacion\n4. Potencia\n5. Raíz cuadrada");
+
+        //se toman los datos por teclado
+        Scanner in = new Scanner(System.in);
+        int opcion = in.nextInt();
+
+        //se realiza la operación correspondiente en función de la opción escogida por el usuario
+        switch (opcion) {
+            case 1:
+                suma.calcular();
+                break;
+            case 2:
+                resta.calcular();
+                break;
+            case 3:
+                multiplicacion.calcular();
+                break;
+            case 4:
+                potencia.calcular();
+                break;
+            case 5:
+                raiz.calcular();
+                break;
+            default:
+                System.out.println("Esa operación no está definida.");
+                break;
+        }
     }
-
 }
