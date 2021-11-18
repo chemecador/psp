@@ -57,14 +57,11 @@ class LaminaMarcoCliente extends JPanel implements Runnable {
 
     public void run() {
         try {
-            System.out.println("comienza el programa");
             conn = new Socket("localhost", 9999);
             Paquete paqueteRecibido;
             while (true) {
-                System.out.println("entro al while");
                 ObjectInputStream in = new ObjectInputStream(conn.getInputStream());
                 paqueteRecibido = (Paquete) in.readObject();
-                System.out.println("he terminado de leer");
                 campoChat.append("\n" + paqueteRecibido.getNick() + ": " + paqueteRecibido.getMensaje());
 
             }
@@ -86,19 +83,15 @@ class LaminaMarcoCliente extends JPanel implements Runnable {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                System.out.println("entro en actionPerformed");
                 Paquete datos = new Paquete();
                 datos.setNick(nick.getText());
                 datos.setIp(ip.getText());
                 datos.setMensaje(campo1.getText());
                 ObjectOutputStream out = new ObjectOutputStream(conn.getOutputStream());
                 out.writeObject(datos);
-                System.out.println(datos.getMensaje());
-                System.out.println("hago cosas");
-                //miSocket.close();
-                System.out.println("salgo");
 
-                //campoChat.append("\n" + datos.getNick() + ": " + datos.getMensaje());
+                campo1.setText(null);
+                //miSocket.close();
 
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());

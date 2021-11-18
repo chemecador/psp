@@ -1,6 +1,0 @@
-package main;
-
-public abstract class Figura {
-	private double area;
-	
-}

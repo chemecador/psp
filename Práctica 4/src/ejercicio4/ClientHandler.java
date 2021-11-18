@@ -3,15 +3,27 @@ package ejercicio4;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientHandler extends Thread{
 
     private final Socket conn;
+    private ArrayList<Socket> clientes;
     private JTextArea jta;
 
-    public ClientHandler(Socket conn, JTextArea areatexto) {
+    public ClientHandler(Socket conn, ArrayList<Socket> clientes, JTextArea areatexto) {
         this.conn = conn;
+        this.clientes = clientes;
         this.jta = areatexto;
+    }
+
+    public void enviarATodos(Paquete paquete) throws IOException {
+        for (Socket conexion : clientes) {
+
+            ObjectOutputStream out = new ObjectOutputStream(conexion.getOutputStream());
+
+            out.writeObject(paquete);
+        }
     }
 
     @Override
@@ -19,7 +31,6 @@ public class ClientHandler extends Thread{
         try {
 
             ObjectInputStream in = new ObjectInputStream(conn.getInputStream());
-            ObjectOutputStream out = new ObjectOutputStream(conn.getOutputStream());
 
             while (true) {
                 String nick, ip, mensaje;
@@ -29,9 +40,7 @@ public class ClientHandler extends Thread{
                 ip = paqueteRecibido.getIp();
                 mensaje = paqueteRecibido.getMensaje();
                 jta.append("\n" + nick + ": " + mensaje + " para " + ip);
-                System.out.println("servidor comienza a escribir");
-                out.writeObject(paqueteRecibido);
-                System.out.println("servidor ya ha escrito");
+                enviarATodos(paqueteRecibido);
 
             }
             //conn.close();

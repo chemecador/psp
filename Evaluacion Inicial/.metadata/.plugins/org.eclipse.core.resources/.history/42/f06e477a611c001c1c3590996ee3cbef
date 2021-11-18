@@ -1,8 +1,0 @@
-package main;
-
-public abstract class Figura {
-	private int x;
-	private int y;
-	
-	public abstract void calcularArea();
-}

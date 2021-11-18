@@ -1,7 +1,0 @@
-package main;
-
-public class Cuenta {
-	private Tipo tipo;
-	private int saldo;
-	public void 
-}
