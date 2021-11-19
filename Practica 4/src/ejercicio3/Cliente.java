@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
+/**
+ * Clase Cliente. Gestiona el cliente
+ * */
 public class Cliente {
 
     public static void main(String[] args) {
@@ -24,7 +26,9 @@ public class Cliente {
 
 }
 
-
+/**
+ * Clase MarcoCliente. Gestiona la ventana.
+ * */
 class MarcoCliente extends JFrame {
 
     public MarcoCliente() {
@@ -39,7 +43,10 @@ class MarcoCliente extends JFrame {
     }
 
 }
-
+/**
+ * Clase LaminaMarcoCliente. Gestiona la interfaz y sus campos.
+ *
+ * */
 class LaminaMarcoCliente extends JPanel implements Runnable {
 
     public LaminaMarcoCliente() {
@@ -67,13 +74,18 @@ class LaminaMarcoCliente extends JPanel implements Runnable {
     @Override
     public void run() {
         try {
+            //creamos un nuevo socket, la ip es local y el puerto 9999
             ServerSocket servidor_cliente = new ServerSocket(9090);
             Socket cliente;
             PaqueteEnvio paqueteRecibido;
             while (true) {
+                //el socket cliente espera a que le llegue una petición al servidor
                 cliente = servidor_cliente.accept();
+                //creamos un flujo de entrada
                 ObjectInputStream flujo_entrada = new ObjectInputStream(cliente.getInputStream());
+                //leemos del flujo el objeto que nos llega
                 paqueteRecibido = (PaqueteEnvio) flujo_entrada.readObject();
+                //escribimos la información en el campo chat
                 campoChat.append("\n" + paqueteRecibido.getNick() + ": " + paqueteRecibido.getMensaje());
             }
         } catch (IOException e) {
@@ -82,19 +94,27 @@ class LaminaMarcoCliente extends JPanel implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Clase PaqueteEnvia. Se encarga de crear una clase (paquete) con los diferentes datos
+     * obtenidos en los campos de texto.
+     * */
     private class EnviaTexto implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
+                //creamos un nuevo socket, la ip es local y el puerto 9999
                 Socket miSocket = new Socket("localhost", 9999);
+                //creamos un Paquete con los datos que ha escrito el usuario y rellenamos sus campos
                 PaqueteEnvio datos = new PaqueteEnvio();
                 datos.setNick(nick.getText());
                 datos.setIp(ip.getText());
                 datos.setMensaje(campo1.getText());
+                //creamos un flujo de salida
                 ObjectOutputStream paquete_datos = new ObjectOutputStream(miSocket.getOutputStream());
+                //enviamos el paquete a través del flujo
                 paquete_datos.writeObject(datos);
+                //cerramos el socket
                 miSocket.close();
 
             } catch (IOException ex) {

@@ -1,18 +1,19 @@
-package ejercicio3;
+package ejercicio2;
 
 import javax.swing.*;
+
 import java.awt.*;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+/**
+ * Clase Servidor. Gestiona el servidor.
+ * */
 public class Servidor {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
 
         MarcoServidor mimarco = new MarcoServidor();
 
@@ -20,7 +21,9 @@ public class Servidor {
 
     }
 }
-
+/**
+ * Clase MarcoServidor. Gestiona la ventana.
+ * */
 class MarcoServidor extends JFrame implements Runnable {
 
     public MarcoServidor() {
@@ -48,24 +51,25 @@ class MarcoServidor extends JFrame implements Runnable {
     @Override
     public void run() {
         try {
+            //creamos un serversocket con el puerto 9999
             ServerSocket servidor = new ServerSocket(9999);
             String nick, ip, mensaje;
+            //creamos un paquete
             PaqueteEnvio paquete_recibido;
 
             while (true) {
+                //creamos un socket que espera a que le llegue una conexión
                 Socket miSocket = servidor.accept();
+                //creamos un flujo de entrada
                 ObjectInputStream paquete_datos = new ObjectInputStream(miSocket.getInputStream());
+                //leemos del flujo de entrada y lo guardamos en un Paquete
                 paquete_recibido = (PaqueteEnvio) paquete_datos.readObject();
                 nick = paquete_recibido.getNick();
                 ip = paquete_recibido.getIp();
                 mensaje = paquete_recibido.getMensaje();
+                //lo escribimos en el área de texto
                 areatexto.append("\n" + nick + ": " + mensaje + " para " + ip);
-
-                Socket enviaDestinatario = new Socket(ip,9090);
-                ObjectOutputStream paquete_reenvio = new ObjectOutputStream(enviaDestinatario.getOutputStream());
-                paquete_reenvio.writeObject(paquete_recibido);
-                paquete_reenvio.close();
-                enviaDestinatario.close();
+                //cerramos el socket
                 miSocket.close();
             }
         } catch (IOException e) {
@@ -73,32 +77,5 @@ class MarcoServidor extends JFrame implements Runnable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-}
-class PaqueteEnvio implements Serializable {
-    private String nick, ip, mensaje;
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 }

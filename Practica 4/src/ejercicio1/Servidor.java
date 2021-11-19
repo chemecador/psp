@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Clase Servidor. Gestiona el servidor.
+ * */
 public class Servidor  {
 
     public static void main(String[] args) {
@@ -19,7 +22,9 @@ public class Servidor  {
 
     }
 }
-
+/**
+ * Clase MarcoServidor. Gestiona la ventana.
+ * */
 class MarcoServidor extends JFrame implements Runnable {
 
     public MarcoServidor(){
@@ -47,12 +52,18 @@ class MarcoServidor extends JFrame implements Runnable {
     @Override
     public void run() {
         try {
+            //creamos un serversocket con el puerto 9999
             ServerSocket servidor = new ServerSocket(9999);
             while(true){
+                //creamos un socket que espera a que le llegue una conexión
                 Socket miSocket = servidor.accept();
+                //creamos un flujo de entrada
                 DataInputStream flujo_entrada = new DataInputStream(miSocket.getInputStream());
+                //leemos del flujo de entrada y lo guardamos en un string
                 String mensaje = flujo_entrada.readUTF();
+                //lo escribimos en el área de texto
                 areatexto.append("\n" + mensaje);
+                //cerramos el closet
                 miSocket.close();
             }
         } catch (IOException e) {

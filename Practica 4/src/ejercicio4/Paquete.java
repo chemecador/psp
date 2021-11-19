@@ -2,7 +2,11 @@ package ejercicio4;
 
 import java.io.Serializable;
 
+/**
+ * Clase Paquete, que contiene un nick, una ip y un mensaje.
+ * */
 public class Paquete implements Serializable {
+
     private String nick, ip, mensaje;
 
     public String getNick() {
