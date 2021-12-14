@@ -1,4 +1,4 @@
-package ejercicio1;
+package ejercicio2;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -18,8 +18,6 @@ public class Servidor {
                 out.writeUTF("¿Qué año quieres consultar?");
                 String año = in.readUTF();
                 System.out.println(año);
-
-
                 if (calcular(año) == null) {
                     out.writeUTF("No hay registros de ese año.");
                 } else {
@@ -33,8 +31,6 @@ public class Servidor {
                     }
                 }
             }
-            out.close();
-            in.close();
         } catch (IOException ex) {
             System.out.println("IOException en Servidor\n" + ex.toString());
         }
@@ -46,13 +42,13 @@ public class Servidor {
         }
         try (BufferedReader br = new BufferedReader
                 (new FileReader(new File
-                        ("incremento_de_la_temperatura_global2.csv")))) {
+                        ("evolucion_anual_de_la_concentracion_de_dioxido_de_carbono_(co2)_en_la_atmosferaNOAA.csv")))) {
 
             String linea;
             while ((linea = br.readLine()) != null) {
                 String lineaAño = linea.substring(0, 4);
                 if (lineaAño.equals(año)) {
-                    return linea.substring(7, linea.length() - 1);
+                    return linea.substring(5);
                 }
             }
         } catch (FileNotFoundException e) {

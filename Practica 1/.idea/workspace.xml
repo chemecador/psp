@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41db5eeb-7829-441a-9f7e-38e97854a5eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../GataAlejandro/GataAlejandro.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../GataAlejandro/src/ejercicio1/Ejercicio1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../GataAlejandro/src/ejercicio2/Ejercicio2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Práctica 1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Práctica 2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Práctica 2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Práctica 2/out/production/Práctica 2/ejercicio2/Ejercicio2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Práctica 2/out/production/Práctica 2/ejercicio2/Ejercicio2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Practica 5/src/ejercicio2/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Practica 5/src/ejercicio2/Servidor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Practica 5/src/ejercicio3/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Practica 5/src/ejercicio3/Servidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Practica 5/src/ejercicio1/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Practica 5/src/ejercicio1/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Practica 5/src/ejercicio1/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Practica 5/src/ejercicio1/Servidor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +25,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ad/VehiculosBBDDproc" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -53,6 +50,8 @@
       <option name="presentableId" value="Default" />
       <updated>1635851623625</updated>
       <workItem from="1635851624810" duration="1474000" />
+      <workItem from="1639126015441" duration="596000" />
+      <workItem from="1639128278347" duration="29000" />
     </task>
     <servers />
   </component>
@@ -64,7 +63,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

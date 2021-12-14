@@ -27,7 +27,8 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `apuesta`
 --
-
+CREATE DATABASE liga;
+USE liga;
 CREATE TABLE `apuesta` (
   `id` int(11) NOT NULL,
   `partido` int(11) NOT NULL,
