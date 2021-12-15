@@ -16,6 +16,7 @@ public class Cliente {
     private final String HOST = "localhost";
     private static Scanner sc = new Scanner(System.in);
     private String tabla;
+    private boolean salir;
 
     public Cliente() {
         try {
@@ -23,33 +24,80 @@ public class Cliente {
             conn = new Socket(HOST, PUERTO);
             in = new DataInputStream(conn.getInputStream());
             out = new DataOutputStream(conn.getOutputStream());
+            salir = false;
             //leemos mensaje de bienvenida
             System.out.println(in.readUTF());
             //llamamos al método que gestiona el inicio de sesión
-            iniciarSesion();
-
-            identificacionC();
-
-            while (true) {
-                elegirTabla();
-                System.out.println(in.readUTF());
-                break;
+            if (iniciarSesion()) {
+                identificacionC();
+                while (true) {
+                    if (elegirTabla()) {
+                        if (this.tu == TipoUsuario.user) {
+                            //leer consulta
+                            System.out.println(in.readUTF());
+                        } else if (this.tu == TipoUsuario.admin) {
+                            //leer opciones
+                            String opciones = in.readUTF();
+                            out.writeUTF(elegirOpcion(opciones));
+                        } else {
+                            System.out.println("Error inesperado...");
+                        }
+                    } else {
+                        break;
+                    }
+                }
             }
+            out.writeUTF("salir");
+            System.out.println(in.readUTF());
+            conn.close();
+            in.close();
+            out.close();
         } catch (IOException e) {
             System.out.println("Error al conectar el Cliente " + e.toString());
         }
     }
 
-    private void elegirTabla() throws IOException {
+    private String elegirOpcion(String opciones) throws IOException {
+        while (true) {
+            System.out.println(opciones);
+            String opcion = sc.nextLine();
+            if (opcion.equalsIgnoreCase("insertar") ||
+                    opcion.equalsIgnoreCase("actualizar") ||
+                    opcion.equalsIgnoreCase("eliminar")) {
+                return opcion;
+            }
+            if (opcion.equals("1")){
+                return "insertar";
+            }
+            if (opcion.equals("2")){
+                return "actualizar";
+            }
+            if (opcion.equals("3")){
+                return "eliminar";
+            }
+
+        }
+    }
+
+    private boolean elegirTabla() throws IOException {
         String tipos = in.readUTF();
         System.out.println(tipos);
         String s = sc.nextLine();
         while (true) {
             if (s.equalsIgnoreCase("entrenador")
-                    || s.equalsIgnoreCase("jugador") || s.equalsIgnoreCase("estadio")) {
+                    || s.equalsIgnoreCase("jugador")
+                    || s.equalsIgnoreCase("estadio")
+                    || s.equalsIgnoreCase("1")
+                    || s.equalsIgnoreCase("2")
+                    || s.equalsIgnoreCase("3")) {
                 this.tabla = s;
                 out.writeUTF(s);
-                return;
+                return true;
+            } else if (s.equalsIgnoreCase("salir") || s.equalsIgnoreCase("4")) {
+                return false;
+            } else {
+                System.out.println("No existe la tabla " + s + ". Los tipos son:\n" + tipos);
+                s = sc.nextLine();
             }
         }
 
@@ -85,19 +133,25 @@ public class Cliente {
         System.out.println(in.readUTF());
     }
 
-    private void iniciarSesion() {
+    private boolean iniciarSesion() {
 
         while (true) {
             System.out.println("\n1. Usuario" +
-                    "\n2. Administrador");
+                    "\n2. Administrador" +
+                    "\n3. Salir");
             String s = sc.nextLine();
-            if (s.equals("1")) {
+            if (s.equals("1") || s.equalsIgnoreCase("usuario")
+                    || s.equalsIgnoreCase("user")) {
                 this.tu = TipoUsuario.user;
-                return;
+                return true;
             }
-            if (s.equals("2")) {
+            if (s.equals("2") || s.equalsIgnoreCase("admin")
+                    || s.equalsIgnoreCase("administrador")) {
                 this.tu = TipoUsuario.admin;
-                return;
+                return true;
+            }
+            if (s.equals("3") || s.equalsIgnoreCase("salir")) {
+                return false;
             }
             System.out.println(s + " no es correcto. Las opciones son: ");
         }
