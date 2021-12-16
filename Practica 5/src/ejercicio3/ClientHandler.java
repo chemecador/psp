@@ -16,8 +16,8 @@ public class ClientHandler extends Thread {
     private String tabla;
     private String s;
     private Connection conexion;
-    private boolean salir;
     private Socket socket;
+    private boolean salir;
 
     public ClientHandler(Socket cliente) {
         System.out.println("Conexión establecida con un nuevo cliente.");
@@ -25,24 +25,18 @@ public class ClientHandler extends Thread {
         try {
             out = new DataOutputStream(cliente.getOutputStream());
             in = new DataInputStream(cliente.getInputStream());
+            salir = false;
             if (identificacionS()) {
                 conectarBBDD();
-                int i = 1;
-                while (true) {
-                    System.out.println("iteracion numero " + i);
-                    if (!preguntarTabla()) {
-                        System.out.println("CHAU");
-                        break;
-                    }
-                    if (this.tu == TipoUsuario.user) {
-                       userDo();
-                    } else if (this.tu == TipoUsuario.admin) {
-                        System.out.println("entro aqui por " + i + " vez");
+                while (!salir) {
+                    preguntarTabla();
+                    if (this.tu == TipoUsuario.user && !salir) {
+                        userDo();
+                    } else if (this.tu == TipoUsuario.admin && !salir) {
                         adminDo();
-                    } else {
+                    } else if (!salir) {
                         System.err.println("Error inesperado al validar usuario/admin en el servidor.");
                     }
-                    i++;
                 }
             }
             out.writeUTF("¡Hasta pronto!");
@@ -66,25 +60,62 @@ public class ClientHandler extends Thread {
 
     private void adminDo() throws IOException, SQLException {
         //string que guarda las opciones disponibles
-        String opciones =   "Opciones disponibles:" +
-                            "\n 1. Insertar" +
-                            "\n 2. Actualizar" +
-                            "\n 3. Eliminar";
+        String opciones = "Opciones disponibles:" +
+                "\n 1. Insertar" +
+                "\n 2. Actualizar" +
+                "\n 3. Eliminar" +
+                "\n 4. Salir";
         //enviar las opciones disponibles al cliente
         out.writeUTF(opciones);
         //leer la elección (ins, act, eli) del cliente
         s = in.readUTF();
         if (s.equalsIgnoreCase("insertar")) {
-            System.out.println("entro en insertar");
             insertar();
-            System.out.println("salgo de insertar");
         } else if (s.equalsIgnoreCase("actualizar")) {
             out.writeUTF("actualizando...");
         } else if (s.equalsIgnoreCase("eliminar")) {
-            out.writeUTF("eliminando...");
+            eliminar();
+        } else if (s.equalsIgnoreCase("salir")) {
+            salir = true;
         } else {
             System.out.println("Opción no válida");
         }
+    }
+
+    private int eliminar() throws IOException, SQLException {
+        if (this.tabla.equalsIgnoreCase("jugador")) {
+            out.writeUTF("Escribe el nombre del jugador que deseas eliminar");
+            s = in.readUTF();
+            out.writeUTF("Jugador eliminado correctamente");
+        } else if (this.tabla.equalsIgnoreCase("entrenador")) {
+            out.writeUTF("Escribe el nombre del entrenador que deseas eliminar");
+            s = in.readUTF();
+            out.writeUTF("Entrenador eliminado correctamente");
+        } else if (this.tabla.equalsIgnoreCase("estadio")) {
+            out.writeUTF("Escribe el nombre del estadio que deseas eliminar");
+            s = in.readUTF();
+            out.writeUTF("Estadio eliminado correctamente");
+        } else {
+            System.out.println("Error. No existe la tabla " + this.tabla);
+        }
+        return eliminar(s);
+    }
+
+    private int eliminar(String nombre) throws SQLException {
+        if (conexion == null) {
+            return -1;
+        }
+        if (conexion.isClosed()) {
+            return -2;
+        }
+        String consulta = "DELETE FROM " + this.tabla + "WHERE nombre=?";
+        PreparedStatement sentencia = conexion.prepareStatement(consulta);
+        sentencia.setString(1, nombre);
+        int numRegistros = sentencia.executeUpdate();
+        if (sentencia != null) {
+            conexion.close();
+        }
+        return numRegistros;
     }
 
     private void userDo() throws SQLException, IOException {
@@ -117,7 +148,6 @@ public class ClientHandler extends Thread {
             return insertarJugador(nombreJug, paisJug, posJug);
 
         } else if (this.tabla.equalsIgnoreCase("entrenador")) {
-            System.out.println("la tabla es entrenador");
             out.writeUTF("Escribe el nombre del entrenador");
             String nombreEnt = in.readUTF();
             out.writeUTF("Escribe la nacionalidad del entrenador");
@@ -131,7 +161,6 @@ public class ClientHandler extends Thread {
             out.writeUTF("Escribe la ciudad del estadio");
             String ciudadEst = in.readUTF();
             out.writeUTF("Estadio insertado");
-            System.out.println("el nombre del estadio es " + nombreEst);
             return insertarEstadio(nombreEst, ciudadEst);
         } else {
             System.out.println("Error. No existe la tabla " + this.tabla);
@@ -151,8 +180,8 @@ public class ClientHandler extends Thread {
         PreparedStatement sentencia = conexion.prepareStatement(consulta);
         sentencia.setString(1, nombreEst);
         sentencia.setString(2, ciudadEst);
-        int numReg=sentencia.executeUpdate();
-        if (sentencia!=null) {
+        int numReg = sentencia.executeUpdate();
+        if (sentencia != null) {
             sentencia.close();
         }
         return numReg;
@@ -171,8 +200,8 @@ public class ClientHandler extends Thread {
         sentencia.setString(1, nombreEnt);
         sentencia.setString(2, paisEnt);
 
-        int numReg=sentencia.executeUpdate();
-        if (sentencia!=null) {
+        int numReg = sentencia.executeUpdate();
+        if (sentencia != null) {
             sentencia.close();
         }
         return numReg;
@@ -191,8 +220,8 @@ public class ClientHandler extends Thread {
         sentencia.setString(1, nombreJug);
         sentencia.setString(2, paisJug);
         sentencia.setString(3, posJug);
-        int numReg=sentencia.executeUpdate();
-        if (sentencia!=null) {
+        int numReg = sentencia.executeUpdate();
+        if (sentencia != null) {
             sentencia.close();
         }
         return numReg;
@@ -265,18 +294,18 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private boolean preguntarTabla() throws IOException {
-        String t =  "\n*************************" +
-                    "\n¿Qué tabla quieres consultar?" +
-                    "\n1. Entrenador" +
-                    "\n2. Jugador" +
-                    "\n3. Estadio" +
-                    "\n4. Salir" +
-                    "\n*************************";
+    private void preguntarTabla() throws IOException {
+        String t = "\n*************************" +
+                "\n¿Qué tabla quieres consultar?" +
+                "\n1. Entrenador" +
+                "\n2. Jugador" +
+                "\n3. Estadio" +
+                "\n4. Salir" +
+                "\n*************************";
         out.writeUTF(t);
         String tablaElegida = in.readUTF();
         if (tablaElegida.equals("salir")) {
-            return false;
+            this.salir = true;
         }
         this.tabla = tablaElegida;
         if (tablaElegida.equals("1")) {
@@ -289,7 +318,6 @@ public class ClientHandler extends Thread {
             this.tabla = "Estadio";
         }
         System.out.println("El cliente está accediendo a la tabla " + this.tabla);
-        return true;
     }
 
     private boolean identificacionS() throws IOException {

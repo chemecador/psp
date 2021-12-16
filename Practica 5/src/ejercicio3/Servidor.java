@@ -6,7 +6,7 @@ import java.net.Socket;
 
 /**
  *
- * TODO: repetir admin varias veces
+ * TODO: comprobar si elimina correctamente
  *
  */
 

@@ -34,7 +34,6 @@ public class Cliente {
                     int i = 0;
                     if (elegirTabla()) {
                         i++;
-                        System.out.println("iteracion numero " + i);
                         if (this.tu == TipoUsuario.user) {
                             //leer consulta
                             System.out.println(in.readUTF());
@@ -106,9 +105,7 @@ public class Cliente {
         } else {
             System.out.println("Error. La tabla " + opcionElegida + " no existe.");
         }
-        //leemos la consulta
-        String consulta = in.readUTF();
-        System.out.println(consulta);
+
     }
 
     private String elegirOpcion(String opciones) throws IOException {
@@ -147,8 +144,6 @@ public class Cliente {
                 //envía al servidor la tabla que ha elegido
                 out.writeUTF(s);
                 //devuelve true ya que ha funcionado correctamente
-
-                System.out.println("ahora la tabla es " + this.tabla);
                 return true;
             }
             if (s.equals("2")) {
@@ -156,8 +151,6 @@ public class Cliente {
                 //envía al servidor la tabla que ha elegido
                 out.writeUTF(s);
                 //devuelve true ya que ha funcionado correctamente
-
-                System.out.println("ahora la tabla es " + this.tabla);
                 return true;
             }
             if (s.equals("3")) {
@@ -165,8 +158,6 @@ public class Cliente {
                 //envía al servidor la tabla que ha elegido
                 out.writeUTF(s);
                 //devuelve true ya que ha funcionado correctamente
-
-                System.out.println("ahora la tabla es " + this.tabla);
                 return true;
             }
             if (s.equalsIgnoreCase("entrenador")
@@ -174,7 +165,6 @@ public class Cliente {
                     || s.equalsIgnoreCase("estadio")) {
                 //cambia el atributo tabla de esta clase
                 this.tabla = s;
-                System.out.println("ahora la tabla es " + this.tabla);
                 //envía al servidor la tabla que ha elegido
                 out.writeUTF(s);
                 //devuelve true ya que ha funcionado correctamente
