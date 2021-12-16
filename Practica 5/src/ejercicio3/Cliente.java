@@ -31,18 +31,20 @@ public class Cliente {
             if (iniciarSesion()) {
                 identificacionC();
                 while (true) {
+                    int i = 0;
                     if (elegirTabla()) {
+                        i++;
+                        System.out.println("iteracion numero " + i);
                         if (this.tu == TipoUsuario.user) {
                             //leer consulta
                             System.out.println(in.readUTF());
                         } else if (this.tu == TipoUsuario.admin) {
-                            //leer opciones
-                            String opciones = in.readUTF();
-                            out.writeUTF(elegirOpcion(opciones));
+                            adminDo();
                         } else {
                             System.out.println("Error inesperado...");
                         }
                     } else {
+                        System.err.println("No has elegido tabla");
                         break;
                     }
                 }
@@ -57,6 +59,58 @@ public class Cliente {
         }
     }
 
+    private void adminDo() throws IOException {
+        String leerOpciones = in.readUTF();
+        String opcionElegida = elegirOpcion(leerOpciones);
+        out.writeUTF(opcionElegida);
+        if (this.tabla.equalsIgnoreCase("jugador")) {
+            //leer la pregunta del nombre
+            System.out.println(in.readUTF());
+            //escribir el nombre
+            out.writeUTF(sc.nextLine());
+            //leer la pregunta de la nacionalidad
+            System.out.println(in.readUTF());
+            //escribir la nacionalidad
+            out.writeUTF(sc.nextLine());
+            //leer la pregunta de la posición
+            System.out.println(in.readUTF());
+            //escribir la posición
+            out.writeUTF(sc.nextLine());
+            //leer mensaje de éxito
+            System.out.println(in.readUTF());
+
+        } else if (this.tabla.equalsIgnoreCase("entrenador")) {
+            //leer la pregunta del nombre
+            System.out.println(in.readUTF());
+            //escribir el nombre
+            out.writeUTF(sc.nextLine());
+            //leer la pregunta de la nacionalidad
+            System.out.println(in.readUTF());
+            //escribir la nacionalidad
+            out.writeUTF(sc.nextLine());
+            //leer mensaje de éxito
+            System.out.println(in.readUTF());
+
+        } else if (this.tabla.equalsIgnoreCase("estadio")) {
+            //leer la pregunta del nombre
+            System.out.println(in.readUTF());
+            //escribir el nombre
+            out.writeUTF(sc.nextLine());
+            //leer la pregunta de la ciudad
+            System.out.println(in.readUTF());
+            //escribir la ciudad
+            out.writeUTF(sc.nextLine());
+            //leer mensaje de éxito
+            System.out.println(in.readUTF());
+
+        } else {
+            System.out.println("Error. La tabla " + opcionElegida + " no existe.");
+        }
+        //leemos la consulta
+        String consulta = in.readUTF();
+        System.out.println(consulta);
+    }
+
     private String elegirOpcion(String opciones) throws IOException {
         while (true) {
             System.out.println(opciones);
@@ -66,13 +120,13 @@ public class Cliente {
                     opcion.equalsIgnoreCase("eliminar")) {
                 return opcion;
             }
-            if (opcion.equals("1")){
+            if (opcion.equals("1")) {
                 return "insertar";
             }
-            if (opcion.equals("2")){
+            if (opcion.equals("2")) {
                 return "actualizar";
             }
-            if (opcion.equals("3")){
+            if (opcion.equals("3")) {
                 return "eliminar";
             }
 
@@ -80,23 +134,57 @@ public class Cliente {
     }
 
     private boolean elegirTabla() throws IOException {
-        String tipos = in.readUTF();
-        System.out.println(tipos);
+        //lee del servidor las tablas disponibles
+        String opciones = in.readUTF();
+        //muestra las tablas disponibles por pantalla
+        System.out.println(opciones);
+        //lee de teclado la tabla que elige el cliente
         String s = sc.nextLine();
         while (true) {
+            //si la tabla es correcta
+            if (s.equals("1")) {
+                this.tabla = "entrenador";
+                //envía al servidor la tabla que ha elegido
+                out.writeUTF(s);
+                //devuelve true ya que ha funcionado correctamente
+
+                System.out.println("ahora la tabla es " + this.tabla);
+                return true;
+            }
+            if (s.equals("2")) {
+                this.tabla = "jugador";
+                //envía al servidor la tabla que ha elegido
+                out.writeUTF(s);
+                //devuelve true ya que ha funcionado correctamente
+
+                System.out.println("ahora la tabla es " + this.tabla);
+                return true;
+            }
+            if (s.equals("3")) {
+                this.tabla = "estadio";
+                //envía al servidor la tabla que ha elegido
+                out.writeUTF(s);
+                //devuelve true ya que ha funcionado correctamente
+
+                System.out.println("ahora la tabla es " + this.tabla);
+                return true;
+            }
             if (s.equalsIgnoreCase("entrenador")
                     || s.equalsIgnoreCase("jugador")
-                    || s.equalsIgnoreCase("estadio")
-                    || s.equalsIgnoreCase("1")
-                    || s.equalsIgnoreCase("2")
-                    || s.equalsIgnoreCase("3")) {
+                    || s.equalsIgnoreCase("estadio")) {
+                //cambia el atributo tabla de esta clase
                 this.tabla = s;
+                System.out.println("ahora la tabla es " + this.tabla);
+                //envía al servidor la tabla que ha elegido
                 out.writeUTF(s);
+                //devuelve true ya que ha funcionado correctamente
                 return true;
             } else if (s.equalsIgnoreCase("salir") || s.equalsIgnoreCase("4")) {
+                //si el cliente quiere salir, devuelve falso
                 return false;
             } else {
-                System.out.println("No existe la tabla " + s + ". Los tipos son:\n" + tipos);
+                //muestra el mensaje de que no existe esa tabla y permite al usuario volver a escribir
+                System.out.println("No existe la tabla " + s + ". Los tipos son:\n" + opciones);
                 s = sc.nextLine();
             }
         }
@@ -106,15 +194,15 @@ public class Cliente {
     private void identificacionC() throws IOException {
 
         if (this.tu == TipoUsuario.user) {
-            userDo();
+            userComprobacion();
         } else if (this.tu == TipoUsuario.admin) {
-            adminDo();
+            adminComprobacion();
         } else {
             System.err.println("Error inesperado. ¡¿No eres usuario ni administrador?!");
         }
     }
 
-    private void adminDo() throws IOException {
+    private void adminComprobacion() throws IOException {
         out.writeUTF(this.tu.toString());
         System.out.println(in.readUTF());
         out.writeUTF(sc.nextLine());
@@ -122,12 +210,10 @@ public class Cliente {
         System.out.println(comprobacion);
         if (comprobacion.charAt(0) != 'B') {
             this.tu = TipoUsuario.user;
-        } else {
-
         }
     }
 
-    private void userDo() throws IOException {
+    private void userComprobacion() throws IOException {
 
         out.writeUTF(this.tu.toString());
         System.out.println(in.readUTF());
