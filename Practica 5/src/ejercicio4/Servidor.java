@@ -1,17 +1,16 @@
-package ejercicio3;
+package ejercicio4;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * Clase Servidor
- */
 public class Servidor {
+    private ServerSocket ss;
+    private DataOutputStream out;
+    private DataInputStream in;
 
-    private ServerSocket ss; //ServerSocket que escucha la llegada de nuevos clientes
-
-    //constructor
     public Servidor() {
         try {
             //se inicializa el serversocket
@@ -28,12 +27,7 @@ public class Servidor {
 
     }
 
-    /**
-     * Método principal
-     * @param args
-     */
     public static void main(String[] args) {
         new Servidor();
     }
-
 }

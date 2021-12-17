@@ -5,12 +5,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Servidor {
-    //private ServerSocket ss;
+    private ServerSocket ss;
     private DataOutputStream out;
     private DataInputStream in;
 
     public Servidor() {
-        try (ServerSocket ss = new ServerSocket(5555)) {
+        try {
+            ss = new ServerSocket(5555);
             Socket client = ss.accept();
             out = new DataOutputStream(client.getOutputStream());
             in = new DataInputStream(client.getInputStream());
