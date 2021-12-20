@@ -12,91 +12,139 @@ import java.util.ArrayList;
  * TODO: gestionar empate, el ultimo jugador se queda esperando a que tiren
  */
 
-
+/**
+ * Clase Servidor
+ */
 public class Servidor {
-    private ServerSocket ss;
-    private DataOutputStream out1; //flujo de salida
-    private DataOutputStream out2;
-    private DataInputStream in1; //flujo de entrada
-    private DataInputStream in2;
+    private ServerSocket ss; //ServerSocket que escucha las llegadas de clientes
+    private DataOutputStream out1; //flujo de salida de datos con el jugador 1 (a partir de ahora, J1)
+    private DataOutputStream out2;//flujo de salida con el jugador 2 (a partir de ahora, J2)
+    private DataInputStream in1; //flujo de entrada de datos con J1
+    private DataInputStream in2; //flujo de entrada con J1
     private String t; //tablero
-    private ArrayList<Socket> clientes;
+    private ArrayList<Socket> jugadores; //lista de jugadores
 
+    /**
+     * Constructor de la clase
+     */
     public Servidor() {
         try {
-            //se inicializa el serversocket
+            //se inicializa el serversocket y el arraylist de jugadores
             ss = new ServerSocket(5555);
-            clientes = new ArrayList<>();
+            jugadores = new ArrayList<>();
 
-            Socket cliente1 = ss.accept();
-            in1 = new DataInputStream(cliente1.getInputStream());
-            out1 = new DataOutputStream(cliente1.getOutputStream());
-            clientes.add(cliente1);
+            //primer socket que registra la llegada del primer jugador
+            Socket jugador1 = ss.accept();
 
-            Socket cliente2 = ss.accept();
-            in2 = new DataInputStream(cliente2.getInputStream());
-            out2 = new DataOutputStream(cliente2.getOutputStream());
-            clientes.add(cliente2);
+            //se inicializan los flujos de entrada y salida
+            in1 = new DataInputStream(jugador1.getInputStream());
+            out1 = new DataOutputStream(jugador1.getOutputStream());
+
+            //se añade el jugador al arraylist
+            jugadores.add(jugador1);
+
+
+            //lo mismo
+            Socket jugador2 = ss.accept();
+            in2 = new DataInputStream(jugador2.getInputStream());
+            out2 = new DataOutputStream(jugador2.getOutputStream());
+            jugadores.add(jugador2);
 
             enviarATodos("jugar");
-            gestionarConexion();
+            gestionar();
+            /*//bucle infinito, el servidor está siempre en ejecución
+            while (true) {
+                //mandamos el mensaje "jugar" a todos los jugadores. Comienza la partida
+                enviarATodos("jugar");
+                //llamamos al método que se encarga de gestionar la partida
+                gestionar();
+            }*/
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void gestionarConexion() {
+    /**
+     * Método que se encarga de gestionar la partida
+     */
+    private void gestionar() {
         try {
-            //enviamos el id a cada cliente
+            //enviamos a cada cliente su id
             out1.writeUTF("1");
             out2.writeUTF("2");
-            t = "0000000001";
+            //se elige quién comienza de manera aleatoria
+            int turno = (int) Math.floor(Math.random() * 2 + 1);
+            enviarATodos(String.valueOf(turno));
+            //se crea el tablero, todas las casillas a 0, con el turno al final
+            t = "000000000" + turno;
             //enviamos el tablero
             enviarATodos(t);
-            int turno = 1;
-            while (true) {
-                //leemos el tablero
+            //creamos la variable r que controlará si ha habido ganador
+            int r = comprobarFinal();
+            //mientras no lo haya...
+            while (r == 0) {
+                //si le toca al j1...
                 if (turno == 1) {
+                    //...leemos el tablero tras su jugada
                     t = in1.readUTF();
+                    //cambio de turno
                     turno++;
                 } else if (turno == 2) {
                     t = in2.readUTF();
                     turno--;
+                } else {
+                    System.err.println("Ha ocurrido un error inesperado. Por favor, contacta con el desarrollador.");
+                    System.exit(0);
                 }
-                System.out.println("tablero recibido: " + t);
-                int r = comprobarFinal();
-                if (r != 0) {
-                    System.out.println("r = " + r);
-                    resultado(r);
-                    break;
-                }
+                //enviamos a los jugadores el nuevo tablero
                 enviarATodos(cambiarOrden(t));
+                //comprobamos si ha habido ganador
+                r = comprobarFinal();
             }
+            //si lo ha habido, llamamos al método que se encarga de gestionarlo
+            resultado(r);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    /**
+     * Método que cambia el turno de un tablero
+     *
+     * @param t Tablero antes de cambiarlo
+     * @return String con el nuevo tablero
+     */
     private String cambiarOrden(String t) {
+        //creamos un nuevo string que contiene los mismos caracteres excepto el último
         String nuevoT = t.substring(0, t.length() - 1);
-        System.out.println("el orden es " + t.charAt(t.length() - 1));
+        //si el turno era del J1...
         if (t.charAt(t.length() - 1) == '1') {
+            //...le concatenamos al nuevo string que cambia el turno...
             nuevoT += "2";
+            //...y devolvemos el string
             return nuevoT;
         } else if (t.charAt(t.length() - 1) == '2') {
+            //idem
             nuevoT += "1";
             return nuevoT;
         } else {
+            //nunca debería llegar a aquí, ha habido un error, devolvemos null
             System.err.println("El string que he recibido no contiene el turno");
             return null;
         }
     }
 
-    //clase que envía el paquete a todos los clientes
+
+    /**
+     * Clase que envía el tablero a todos los jugadores
+     *
+     * @param s Tablero a enviar
+     * @throws IOException
+     */
     private void enviarATodos(String s) throws IOException {
-        for (Socket soc : clientes) {
+        //recorremos el arraylist de jugadores
+        for (Socket soc : jugadores) {
             //se crea un flujo de salida
             DataOutputStream out = new DataOutputStream(soc.getOutputStream());
             //se envía el paquete a cada cliente a través del flujo
@@ -104,12 +152,16 @@ public class Servidor {
         }
     }
 
+    /**
+     * Método que comprueba si ha habido ganador
+     *
+     * @return 0 (no ha habido), 1 (ha ganado el jugador 1), 2 (ha ganado el jugador 2), 3 (empate)
+     */
     private int comprobarFinal() {
         //comprobar filas
-        for (int i = 0; i < t.length(); i++) {
-        }
         if (t.charAt(0) == t.charAt(1) && t.charAt(0) == t.charAt(2)) {
             if (t.charAt(0) != '0') {
+                //hay 3 iguales y no son 0, devolvemos su valor numérico
                 return Character.getNumericValue(t.charAt(0));
             }
         } else if (t.charAt(3) == t.charAt(4) && t.charAt(3) == t.charAt(5)) {
@@ -147,22 +199,30 @@ public class Servidor {
                 return Character.getNumericValue(t.charAt(2));
             }
         }
+        //no hemos encontrado ganador todavía, comprobamos si quedan casillas libres
         if (lleno()) {
+            //el tablero está lleno y no ha habido ganador : ha habido empate
             return 3;
         }
+        //no hay ganador y quedan casillas libres, devolvemos 0 y se sigue jugando
         return 0;
     }
 
+    /**
+     * Método que es invocado cuando ha habido ganador. Gestiona qué tiene que ocurrir después.
+     *
+     * @param r Código que contiene el ganador : 0 (no ha habido), 1 (ha ganado el jugador 1), 2 (ha ganado el jugador 2), 3 (empate)
+     */
     private void resultado(int r) {
+        //ha ganado el jugador 1
         if (r == 1) {
-            //JOptionPane.showMessageDialog(null,"","",JOptionPane.PLAIN_MESSAGE);
             System.out.println("Gana el jugador 1");
             try {
                 out1.writeUTF("W");
                 out2.writeUTF("L");
                 out2.writeUTF(t);
             } catch (IOException e) {
-                System.out.println("Error. No se ha podido notificar de la victoria 1");
+                System.err.println("Error. No se ha podido notificar de la victoria 1");
                 e.printStackTrace();
             }
         } else if (r == 2) {
@@ -172,34 +232,48 @@ public class Servidor {
                 out1.writeUTF(t);
                 out2.writeUTF("W");
             } catch (IOException e) {
-                System.out.println("Error. No se ha podido notificar de la victoria 2");
+                System.err.println("Error. No se ha podido notificar de la victoria 2");
                 e.printStackTrace();
             }
         } else if (r == 3) {
             System.out.println("Empate");
             try {
+                System.out.println("envio la D");
                 out1.writeUTF("D");
                 out2.writeUTF("D");
-                try {
-                    Thread.currentThread().sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             } catch (IOException e) {
-                System.out.println("Error. No se ha podido notificar del empate");
+                System.err.println("Error. No se ha podido notificar del empate");
                 e.printStackTrace();
             }
         }
+        try {
+            out1.close();
+            out2.close();
+            in1.close();
+            in2.close();
+        } catch (IOException e) {
+            System.err.println("Error al cerrar los flujos de datos");
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Método que comprueba si el tablero está lleno
+     *
+     * @return True (lleno), False (no lleno)
+     */
     private boolean lleno() {
-        if (t.indexOf('0') == -1){
-            System.out.println("está lleno");
+        if (t.indexOf('0') == -1) {
             return true;
         }
         return false;
     }
 
+    /**
+     * Método principal
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         new Servidor();
     }

@@ -17,6 +17,7 @@ public class Vista extends JFrame{
     ArrayList<JButton> botones;
     public Vista(){
         new JFrame();
+        setTitle("Tres en raya");
         setContentPane(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(750,300,500,500);
