@@ -1,27 +1,39 @@
 package ejercicio4;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Clase Vista. Hereda de JFrame y crea el tablero de juego.
+ */
 public class Vista extends JFrame{
-    JPanel panel;
-    JButton b00;
-    JButton b10;
-    JButton b20;
-    JButton b01;
-    JButton b11;
-    JButton b21;
-    JButton b02;
-    JButton b12;
-    JButton b22;
+    private JPanel panel;
+    //Botones del 1 al 9
+    private JButton b00;
+    private JButton b10;
+    private JButton b20;
+    private JButton b01;
+    private JButton b11;
+    private JButton b21;
+    private JButton b02;
+    private JButton b12;
+    private JButton b22;
+    //ArrayList de los 9 botones
     ArrayList<JButton> botones;
+
+    /**
+     * Constructor
+     */
     public Vista(){
         new JFrame();
-        setTitle("Tres en raya");
-        setContentPane(panel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(750,300,500,500);
-        setVisible(true);
+        this.setTitle("Tres en raya");
+        this.setContentPane(panel);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(500,500);
+        this.setBackground(Color.GREEN);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
         botones = new ArrayList<>();
         botones.add(b00);

@@ -361,6 +361,7 @@ public class Cliente extends Vista implements ActionListener, Runnable {
                 }
                 break;
         }
+        //ha salido bien, devuelves true
         return true;
     }
 

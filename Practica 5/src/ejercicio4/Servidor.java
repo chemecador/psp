@@ -238,7 +238,6 @@ public class Servidor {
         } else if (r == 3) {
             System.out.println("Empate");
             try {
-                System.out.println("envio la D");
                 out1.writeUTF("D");
                 out2.writeUTF("D");
             } catch (IOException e) {
@@ -247,6 +246,7 @@ public class Servidor {
             }
         }
         try {
+            //cerramos los flujos de datos
             out1.close();
             out2.close();
             in1.close();
