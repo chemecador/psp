@@ -5,12 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
-
-
-/**
- * TODO: gestionar empate, el ultimo jugador se queda esperando a que tiren
- */
 
 /**
  * Clase Servidor
@@ -52,13 +48,15 @@ public class Servidor {
 
             enviarATodos("jugar");
             gestionar();
-            /*//bucle infinito, el servidor está siempre en ejecución
+            //bucle infinito, el servidor está siempre en ejecución
             while (true) {
                 //mandamos el mensaje "jugar" a todos los jugadores. Comienza la partida
                 enviarATodos("jugar");
                 //llamamos al método que se encarga de gestionar la partida
                 gestionar();
-            }*/
+            }
+        } catch (SocketException se) {
+            System.out.println("Conexión con el cliente cerrada.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,8 +102,10 @@ public class Servidor {
             }
             //si lo ha habido, llamamos al método que se encarga de gestionarlo
             resultado(r);
+        } catch (SocketException se) {
+            System.out.println("Conexión con el cliente cerrada.");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Conexión cerrada con el cliente.");
         }
     }
 
@@ -221,6 +221,8 @@ public class Servidor {
                 out1.writeUTF("W");
                 out2.writeUTF("L");
                 out2.writeUTF(t);
+            } catch (SocketException se) {
+                System.out.println("Conexión con el cliente cerrada.");
             } catch (IOException e) {
                 System.err.println("Error. No se ha podido notificar de la victoria 1");
                 e.printStackTrace();
@@ -231,6 +233,8 @@ public class Servidor {
                 out1.writeUTF("L");
                 out1.writeUTF(t);
                 out2.writeUTF("W");
+            } catch (SocketException se) {
+                System.out.println("Conexión con el cliente cerrada.");
             } catch (IOException e) {
                 System.err.println("Error. No se ha podido notificar de la victoria 2");
                 e.printStackTrace();
@@ -240,6 +244,8 @@ public class Servidor {
             try {
                 out1.writeUTF("D");
                 out2.writeUTF("D");
+            } catch (SocketException se) {
+                System.out.println("Conexión con el cliente cerrada.");
             } catch (IOException e) {
                 System.err.println("Error. No se ha podido notificar del empate");
                 e.printStackTrace();

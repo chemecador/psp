@@ -19,6 +19,7 @@ public class Cliente {
     private final String HOST = "localhost"; //dirección IP (local)
     private String tabla; //tabla en la que se consultará
     private static Scanner sc = new Scanner(System.in); //Scanner para leer de teclado
+    private String s; //string que contiene los mensajes que se envían y se reciben
 
     //constructor
     public Cliente() {
@@ -35,8 +36,6 @@ public class Cliente {
                 no entra si el usuario presiona salir*/
 
             if (iniciarSesion()) {
-                //notificar de la elección y comprobar la contraseña si ha elegido administrador
-                identificacionC();
                 //bucle infinito del que los diferentes métodos se encargan de gestionar su salida
                 while (true) {
                     //si la elección de tabla es correcta (no ha elegido salir)...
@@ -77,9 +76,9 @@ public class Cliente {
      */
     private void adminDo() throws IOException {
         //guardamos las opciones disponibles en un string
-        String leerOpciones = in.readUTF();
+        s = in.readUTF();
         //guardamos la opción elegida por el cliente en otro string
-        String opcionElegida = elegirOpcion(leerOpciones);
+        String opcionElegida = elegirOpcion(s);
         //enviamos al servidor la opción elegida
         out.writeUTF(opcionElegida);
         //diferenciamos las 3 posibles opciones que tiene el administrador
@@ -345,19 +344,14 @@ public class Cliente {
     private void adminComprobacion() throws IOException {
         //envía al servidor su petición de logearse como administrador
         out.writeUTF(this.tu.toString());
-        //el servidor le pregunta la contraseña
-        System.out.println(in.readUTF());
-        //se recoge de teclado la contraseña y se envía al servidor
-        out.writeUTF(sc.nextLine());
-        //se recoge la respuesta del servidor y se muestra por pantalla
-        String comprobacion = in.readUTF();
-        System.out.println(comprobacion);
-        //si la contraseña no es correcta...
-        if (comprobacion.charAt(0) != 'B') {
-            //se logea como usuario
-            this.tu = TipoUsuario.user;
-        }
-        //si es correcta, sigue trabajando como administrador
+        do{
+            System.out.println(in.readUTF());
+            out.writeUTF(sc.nextLine());
+            System.out.println(in.readUTF());
+            out.writeUTF(sc.nextLine());
+            s = in.readUTF();
+            System.out.println(s);
+        } while (s.charAt(0) != 'B');
     }
 
     /**
@@ -367,15 +361,23 @@ public class Cliente {
     private void userComprobacion() throws IOException {
         //envía al servidor un mensaje con su Tipo de Usuario (usuario)
         out.writeUTF(this.tu.toString());
-        //lee el mensaje de bienvenida
-        System.out.println(in.readUTF());
+        //lee el mensaje de pedir contraseña
+        do {
+            System.out.println(in.readUTF());
+            out.writeUTF(sc.nextLine());
+            System.out.println(in.readUTF());
+            out.writeUTF(sc.nextLine());
+            s = in.readUTF();
+            System.out.println(s);
+        } while (s.charAt(0) != 'B');
     }
 
     /**
      * Método que muestra los diferentes tipos de usuario que existen y recoge la elección del usuario
      * @return True (elección correcta) False (el cliente quiere salir)
      */
-    private boolean iniciarSesion() {
+    private boolean iniciarSesion() throws IOException {
+
         //bucle infinito hasta que se produzca una elección correcta
         while (true) {
             //se muestran por pantalla las opciones disponibles
@@ -389,6 +391,7 @@ public class Cliente {
                     || s.equalsIgnoreCase("user")) {
                 //se recoge la elección y se devuelve true
                 this.tu = TipoUsuario.user;
+                userComprobacion();
                 return true;
             }
             //si es una opción válida de admin...
@@ -396,6 +399,7 @@ public class Cliente {
                     || s.equalsIgnoreCase("administrador")) {
                 //se recoge la elección y se devuelve true
                 this.tu = TipoUsuario.admin;
+                adminComprobacion();
                 return true;
             }
             //si el cliente decide salir...

@@ -26,6 +26,7 @@ public class Vista extends JFrame{
      * Constructor
      */
     public Vista(){
+        //ventana
         new JFrame();
         this.setTitle("Tres en raya");
         this.setContentPane(panel);
@@ -35,6 +36,7 @@ public class Vista extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+        //añadimos los botones al arraylist
         botones = new ArrayList<>();
         botones.add(b00);
         botones.add(b10);

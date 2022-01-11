@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class ClientHandler extends Thread {
     private Connection conexion; //conexión con la base de datos
     private Socket socket; //socket con la conexión con el cliente
     private boolean salir; //centinela para controlar el fin del bucle
+    private boolean correcta; //si la clave es correcta, true ; si no lo es, false
 
     //constructor
     public ClientHandler(Socket cliente) {
@@ -53,6 +55,8 @@ public class ClientHandler extends Thread {
             }
             //mensaje de despedida
             out.writeUTF("¡Hasta pronto!");
+            System.out.println("Conexión con el cliente cerrada");
+        } catch (SocketException se) {
             System.out.println("Conexión con el cliente cerrada");
         } catch (IOException ex) {
             System.out.println("IOException en Servidor\n" + ex.toString());
@@ -194,7 +198,7 @@ public class ClientHandler extends Thread {
      *
      * @param nombreOld Nombre del entrenador viejo
      * @param nombreNew Nombre del entrenador nuevo
-     * @param paisEnt Ciudad del entrenador
+     * @param paisEnt   Ciudad del entrenador
      * @return Número de registros actualizados
      * @throws SQLException
      */
@@ -655,27 +659,49 @@ public class ClientHandler extends Thread {
         out.writeUTF("¡Buenas! ¿Eres un usuario o un administrador?");
         //lee la respuesta (si es usuario o administrador)
         s = in.readUTF();
+        System.out.println(s);
         //si es administrador...
         if (s.equals("admin")) {
-            out.writeUTF("Introduce la clave de administrador: ");
-            //le pide la clave y la almacena
-            s = in.readUTF();
-            //si la clave es correcta
-            if (s.equals(pass)) {
-                //da el mensaje de bienvenida, lo posiciona como administrador
-                out.writeUTF("Bienvenido, administrador.");
-                this.tu = TipoUsuario.admin;
-            } else {
-                //si la clave no es correcta, lo identifica como usuario
-                out.writeUTF("Contraseña incorrecta. Serás identificado como usuario.");
-                this.tu = TipoUsuario.user;
+            //comprueba si es correcta
+            correcta = false;
+            String user = "";
+            String pass = "";
+            while (!correcta) {
+                //pregunta user y pass
+                out.writeUTF("Introduce el email:");
+                user = in.readUTF();
+                out.writeUTF("Introduce la contraseña:");
+                pass = in.readUTF();
+                correcta = comprobarClaveAdmin(user, pass);
+                //notifica si es correcta o no
+                if (correcta) {
+                    out.writeUTF("Bienvenido, " + user);
+                } else {
+                    out.writeUTF("Email o contraseña incorrectos.\n");
+                }
             }
-            //... si es usuario ...
+            //una vez es correcta, se señala en el atributo de la clase
+            this.tu = TipoUsuario.admin;
+
         } else if (s.equals("user")) {
-            //le da la bienvenida, lo identifica como usuario
-            out.writeUTF("Bienvenido, usuario.");
+            //idem
+            correcta = false;
+            String user = "";
+            String pass = "";
+            while (!correcta) {
+                //pregunta user y pass
+                out.writeUTF("Introduce el email:");
+                user = in.readUTF();
+                out.writeUTF("Introduce la contraseña:");
+                pass = in.readUTF();
+                correcta = comprobarClaveUser(user, pass);
+                if (correcta) {
+                    out.writeUTF("Bienvenido, " + user);
+                } else {
+                    out.writeUTF("Email o contraseña incorrectos.\n");
+                }
+            }
             this.tu = TipoUsuario.user;
-            //si ha elegido salir...
         } else if (s.equals("salir")) {
             //devuelve falso y pone salir a true
             this.salir = true;
@@ -684,6 +710,61 @@ public class ClientHandler extends Thread {
             System.err.println("Error inesperado. ");
             this.salir = true;
         }
+
+    }
+
+    /**
+     * Método que comprueba si el email y la contraseña del admin son correctos
+     *
+     * @param email Email del administrador
+     * @param pass  Contraseña del administrador
+     * @return True (es correcto), False (no es correcto)
+     */
+    private boolean comprobarClaveAdmin(String email, String pass) {
+        //conecta con la base de datos
+        conectar();
+        //realiza la consulta de la tabla actual
+        String consulta = "SELECT * FROM usuario WHERE email = \'" + email
+                + "\' AND password = \'" + pass + "\' AND es_administrador = 1";
+        PreparedStatement sentencia = null;
+        try {
+            //realiza la consulta y la ejecuta
+            sentencia = conexion.prepareStatement(consulta);
+            ResultSet res = sentencia.executeQuery();
+            return res.next();
+        } catch (SQLException e) {
+            System.out.println("Error al consultar + " + e.toString());
+        }
+        desconectar();
+        //ha habido un error; desconecta y devuelve null.
+        return false;
+    }
+
+    /**
+     * Método que comprueba si el email y la contraseña del usuario son correctos
+     *
+     * @param email Email del usuario
+     * @param pass  Contraseña del usuario
+     * @return True (es correcto), False (no es correcto)
+     */
+    private boolean comprobarClaveUser(String email, String pass) {
+        //conecta con la base de datos
+        conectar();
+        //realiza la consulta de la tabla actual
+        String consulta = "SELECT * FROM usuario WHERE email = \'" + email + "\' AND password = \'" + pass + "\'";
+        //String consulta = "SELECT * FROM usuario";
+        PreparedStatement sentencia = null;
+        try {
+            //realiza la consulta y la ejecuta
+            sentencia = conexion.prepareStatement(consulta);
+            ResultSet res = sentencia.executeQuery();
+            return res.next();
+        } catch (SQLException e) {
+            System.out.println("Error al consultar + " + e.toString());
+        }
+        desconectar();
+        //ha habido un error; desconecta y devuelve null.
+        return false;
     }
 }
 
