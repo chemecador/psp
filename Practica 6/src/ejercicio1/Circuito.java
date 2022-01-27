@@ -1,6 +1,10 @@
 package ejercicio1;
 
+/**
+ * Clase Circuito
+ */
 public class Circuito {
+    //atributos de la clase
     double lon;
     double lat;
     int zoom;
@@ -8,6 +12,7 @@ public class Circuito {
     String name;
     String id;
 
+    //constructores
     public Circuito() {
     }
 
@@ -20,6 +25,7 @@ public class Circuito {
         this.id = id;
     }
 
+    //getters y setters
     public double getLon() {
         return lon;
     }
