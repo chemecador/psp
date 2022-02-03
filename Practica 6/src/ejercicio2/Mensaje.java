@@ -1,18 +1,24 @@
 package ejercicio2;
 
+/***
+ * Clase mensaje
+ */
 public class Mensaje {
 
-    String año;
-    String incremento;
+    //atributos
+    private String año;
+    private String incremento;
 
+    //constructores
     public Mensaje(String año, String incremento) {
         this.año = año;
         this.incremento = incremento;
     }
+    public Mensaje(){
 
-    public Mensaje() {
     }
 
+    //getters y setters
     public String getAño() {
         return año;
     }

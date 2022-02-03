@@ -1,5 +1,7 @@
 package ejercicio2;
 
+import com.google.gson.Gson;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,7 +17,10 @@ public class Cliente {
     private Socket conn; //socket para conectarse al servidor
     private DataInputStream in; //flujo de entrada de datos del servidor
     private DataOutputStream out; //flujo de salida de datos del servidor
-    private String año; //año que queremos consultar
+    private String s; //año que queremos consultar
+    private Mensaje m; //variable del tipo Mensaje
+    private Gson gson; //variable de tipo Gson, librería de Google para trabajar con json
+    private String json; //variable de tipo String que almacenará los datos de un json
 
     public Cliente() {
         //se define el socket
@@ -24,18 +29,36 @@ public class Cliente {
             conn = new Socket(HOST, PUERTO);
             in = new DataInputStream(conn.getInputStream());
             out = new DataOutputStream(conn.getOutputStream());
+            gson = new Gson(); //inicializamos la librería Gson
+            m = new Mensaje(); //inicializamos el Mensaje
+            Scanner sc = new Scanner(System.in); //creamos un scanner para leer por teclado
             while (true) {
-                //lo leemos en pantalla el mensaje recibido
-                System.out.println(in.readUTF());
-                //pedimos por teclado el año que queremos consultar
-                pedirDatos();
-                //se lo enviamos al servidor
-                out.writeUTF(this.año);
-                System.out.println(in.readUTF());
-                if (año.equals("salir")){
+                // leemos en pantalla el mensaje recibido
+                s = in.readUTF();
+                //guardamos en la variable Mensaje m el contenido del json (String s) gracias al método fromJson de la librería gson
+                m = gson.fromJson(s, Mensaje.class);
+                //lo mostramos por pantalla
+                System.out.println(m.getAño());
+
+                //pedimos por teclado el año que queremos consultar y lo guardamos en el atributo año del Mensaje m
+                m.setAño(sc.nextLine());
+                //convertimos el Mensaje m a un json con el método toJson
+                json = gson.toJson(m);
+                //se lo enviamos al servidor en formato json
+                out.writeUTF(json);
+                //leemos la respuesta del servidor
+                s = in.readUTF();
+                //guardamos en la variable Mensaje m el contenido del json (String s) gracias al método fromJson de la librería gson
+                m = gson.fromJson(s, Mensaje.class);
+                //lo mostramos por pantalla
+                System.out.println(m.getAño());
+                //si el servidor se ha despedido de nosotros...
+                if (m.getAño().equals("¡Hasta pronto!")) {
+                    //...salimos del bucle para cerrar la aconexión
                     break;
                 }
             }
+            System.out.println("Conexión con el servidor cerrada");
             //cerramos la conexión
             conn.close();
             in.close();
@@ -47,17 +70,8 @@ public class Cliente {
     }
 
     /**
-     * Método que recoge de teclado el año que queremos consultar
-     */
-    private void pedirDatos() {
-        //scanner para leer de teclado
-        Scanner in = new Scanner(System.in);
-        //lo guardamos en el atributo año
-        this.año = in.nextLine();
-    }
-
-    /**
      * Método principal
+     *
      * @param args
      */
     public static void main(String[] args) {
