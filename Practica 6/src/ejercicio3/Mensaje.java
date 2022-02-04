@@ -1,38 +1,45 @@
 package ejercicio3;
 
+/***
+ * Clase mensaje
+ */
 public class Mensaje {
-    private String s;
-    private TipoUsuario tu;
 
-    public Mensaje(String s, TipoUsuario tu) {
-        this.s = s;
-        this.tu = tu;
+    //atributos
+    private String año;
+    private String incremento;
+
+    //constructores
+    public Mensaje(String año, String incremento) {
+        this.año = año;
+        this.incremento = incremento;
+    }
+    public Mensaje(){
+
     }
 
-    public Mensaje() {
+    //getters y setters
+    public String getAño() {
+        return año;
     }
 
-    public String getS() {
-        return s;
+    public void setAño(String año) {
+        this.año = año;
     }
 
-    public void setS(String s) {
-        this.s = s;
+    public String getIncremento() {
+        return incremento;
     }
 
-    public TipoUsuario getTu() {
-        return tu;
-    }
-
-    public void setTu(TipoUsuario tu) {
-        this.tu = tu;
+    public void setIncremento(String incremento) {
+        this.incremento = incremento;
     }
 
     @Override
     public String toString() {
         return "Mensaje{" +
-                "mensaje='" + s + '\'' +
-                ", Tipo de usuario=" + tu +
+                "año='" + año + '\'' +
+                ", incremento='" + incremento + '\'' +
                 '}';
     }
 }

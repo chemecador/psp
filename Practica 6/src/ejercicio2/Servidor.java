@@ -90,7 +90,7 @@ public class Servidor {
         //creamos un Bufferedreader para leer el archivo donde se encuentra la información
         try (BufferedReader br = new BufferedReader
                 (new FileReader(new File
-                        ("evolucion_anual_de_la_concentracion_de_dioxido_de_carbono_(co2)_en_la_atmosferaNOAA.csv")))) {
+                        ("incremento_de_la_temperatura_global2.csv")))) {
             //línea que vamos a leer
             String linea;
             //mientras no sea null (quedan líneas por leer)
@@ -99,8 +99,8 @@ public class Servidor {
                 String lineaAño = linea.substring(0, 4);
                 //si el año se corresponde con el que ha solicitado consultar el usuario...
                 if (lineaAño.equals(año)) {
-                    //devolvemos lo que hay a partir de ahí, que es el aumento correspondiente
-                    return linea.substring(5);
+                    //devolvemos el aumento
+                    return linea.substring(7, linea.length() - 1);
                 }
             }
         } catch (FileNotFoundException e) {

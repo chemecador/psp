@@ -1,4 +1,4 @@
-package ejercicio3;
+package ejercicio4;
 
 /**
  * Tipos de usuario (usuario, administrador)

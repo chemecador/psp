@@ -1,15 +1,13 @@
-package ejercicio3;
+package ejercicio4;
 
 import com.google.gson.Gson;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class ClientHandler extends Thread {
 
@@ -60,7 +58,8 @@ public class ClientHandler extends Thread {
                 }
                 //si ha elegido salir en algún momento, sale del bucle
             }
-            //mensaje de despedida
+            //en el Mensaje M, establecemos dentro del atributo String s el mensaje que queremos enviar
+            //lo convertimos a Json y lo enviamos
             m.setS("¡Hasta pronto!");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -99,6 +98,8 @@ public class ClientHandler extends Thread {
                 "\n 3. Eliminar" +
                 "\n 4. Salir";
         //enviar las opciones disponibles al cliente
+        //en el Mensaje M, establecemos dentro del atributo String s el mensaje que queremos enviar
+        //lo convertimos a Json y lo enviamos
         m.setS(opciones);
         json = gson.toJson(m);
         out.writeUTF(json);
@@ -130,38 +131,45 @@ public class ClientHandler extends Thread {
     private int actualizar() throws IOException, SQLException {
         //se distingue en función de la tabla que quiere actualizar
         if (this.tabla.equalsIgnoreCase("jugador")) {
+            //en el Mensaje M, establecemos dentro del atributo String s el mensaje que queremos enviar
+            //lo convertimos a Json y lo enviamos
             m.setS("Escribe el nombre del jugador que quieres modificar");
             json = gson.toJson(m);
             out.writeUTF(json);
+
+            //leemos en el String s el mensaje que nos envía el cliente
+            //lo convertimos a Mensaje con el método fromJson de la librería Gson
+            //en el String s guardamos el contenido del atributo s del Mensaje m
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
             String nombreOld = s;
+            //idem
             m.setS("Escribe el nuevo nombre del jugador");
             json = gson.toJson(m);
             out.writeUTF(json);
+            //idem
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
             String nombreNew = s;
+
             m.setS("Escribe la nueva nacionalidad del jugador");
             json = gson.toJson(m);
             out.writeUTF(json);
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
             String paisJug = s;
+
             m.setS("Escribe la nueva posición del jugador");
             json = gson.toJson(m);
             out.writeUTF(json);
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
             String posJug = s;
+
             m.setS("Jugador actualizado");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -176,7 +184,7 @@ public class ClientHandler extends Thread {
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
+
             String nombreOld = s;
             m.setS("Escribe el nuevo nombre del entrenador");
             json = gson.toJson(m);
@@ -184,7 +192,7 @@ public class ClientHandler extends Thread {
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
+
             String nombreNew = s;
             m.setS("Escribe la nueva nacionalidad del entrenador");
             json = gson.toJson(m);
@@ -192,8 +200,8 @@ public class ClientHandler extends Thread {
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
             String paisEnt = s;
+
             m.setS("Entrenador actualizado");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -207,15 +215,15 @@ public class ClientHandler extends Thread {
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
             String nombreOld = s;
+
             m.setS("Escribe el nuevo nombre del estadio");
             json = gson.toJson(m);
             out.writeUTF(json);
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
+
             String nombreNew = s;
             m.setS("Escribe la nueva ciudad del estadio");
             json = gson.toJson(m);
@@ -223,7 +231,7 @@ public class ClientHandler extends Thread {
             s = in.readUTF();
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
-            m = gson.fromJson(s,Mensaje.class);
+
             String ciudadEst = s;
             m.setS("Estadio actualizado");
             json = gson.toJson(m);
@@ -450,6 +458,7 @@ public class ClientHandler extends Thread {
      */
     private int insertar() throws IOException, SQLException {
         if (this.tabla.equalsIgnoreCase("jugador")) {
+            //idem
             m.setS("Escribe el nombre del jugador");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -457,6 +466,7 @@ public class ClientHandler extends Thread {
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
             String nombreJug = s;
+
             m.setS("Escribe la nacionalidad del jugador");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -464,6 +474,7 @@ public class ClientHandler extends Thread {
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
             String paisJug = s;
+
             m.setS("Escribe la posición del jugador");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -471,6 +482,7 @@ public class ClientHandler extends Thread {
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
             String posJug = s;
+
             m.setS("Jugador insertado");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -478,6 +490,7 @@ public class ClientHandler extends Thread {
             return insertarJugador(nombreJug, paisJug, posJug);
 
         } else if (this.tabla.equalsIgnoreCase("entrenador")) {
+            //idem
             m.setS("Escribe el nombre del entrenador");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -485,6 +498,7 @@ public class ClientHandler extends Thread {
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
             String nombreEnt = s;
+            //idem
             m.setS("Escribe la nacionalidad del entrenador");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -492,6 +506,7 @@ public class ClientHandler extends Thread {
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
             String paisEnt = s;
+
             m.setS("Entrenador insertado");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -499,13 +514,16 @@ public class ClientHandler extends Thread {
             return insertarEntrenador(nombreEnt, paisEnt);
 
         } else if (this.tabla.equalsIgnoreCase("estadio")) {
+            //idem
             m.setS("Escribe el nombre del estadio");
             json = gson.toJson(m);
             out.writeUTF(json);
             s = in.readUTF();
+
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
             String nombreEst = s;
+
             m.setS("Escribe la ciudad del estadio");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -513,6 +531,7 @@ public class ClientHandler extends Thread {
             m = gson.fromJson(s,Mensaje.class);
             s = m.getS();
             String ciudadEst = s;
+
             m.setS("Estadio insertado");
             json = gson.toJson(m);
             out.writeUTF(json);
@@ -766,6 +785,7 @@ public class ClientHandler extends Thread {
         m.setS(s);
         json = gson.toJson(m);
         out.writeUTF(json);
+
         //lee la tabla elegida por el cliente
         s = in.readUTF();
         m = gson.fromJson(s,Mensaje.class);
@@ -804,6 +824,7 @@ public class ClientHandler extends Thread {
         json = gson.toJson(m);
         //escribe al cliente la pregunta
         out.writeUTF(json);
+
         //lee la respuesta (si es usuario o administrador)
         s = in.readUTF();
         m = gson.fromJson(s,Mensaje.class);
