@@ -96,10 +96,14 @@ public class Servidor {
                 if (turno == 1) {
                     //...leemos el tablero tras su jugada
                     t = in1.readUTF();
+                    tablero = gson.fromJson(t,Tablero.class);
+                    t = tablero.getT();
                     //cambio de turno
                     turno++;
                 } else if (turno == 2) {
                     t = in2.readUTF();
+                    tablero = gson.fromJson(t,Tablero.class);
+                    t = tablero.getT();
                     turno--;
                 } else {
                     System.err.println("Ha ocurrido un error inesperado. Por favor, contacta con el desarrollador.");

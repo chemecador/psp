@@ -40,6 +40,7 @@ public class Cliente extends Vista implements ActionListener, Runnable {
             in = new DataInputStream(conn.getInputStream());
             out = new DataOutputStream(conn.getOutputStream());
             tablero = new Tablero();
+            gson = new Gson();
         } catch (IOException e) {
             System.out.println("Error al conectar el Cliente con el Servidor");
             e.printStackTrace();
