@@ -394,7 +394,6 @@ public class Cliente extends Vista implements ActionListener, Runnable {
             System.out.println("Esperando jugadores...");
             //leemos la orden de jugar
             s = in.readUTF();
-            System.out.println("s es " + s);
             tablero = gson.fromJson(s, Tablero.class);
             s = tablero.getT();
             //recibimos el id

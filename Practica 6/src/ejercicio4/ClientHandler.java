@@ -953,7 +953,6 @@ public class ClientHandler extends Thread {
         conectar();
         //realiza la consulta de la tabla actual
         String consulta = "SELECT * FROM usuario WHERE email = \'" + email + "\' AND password = \'" + pass + "\'";
-        //String consulta = "SELECT * FROM usuario";
         PreparedStatement sentencia = null;
         try {
             //realiza la consulta y la ejecuta

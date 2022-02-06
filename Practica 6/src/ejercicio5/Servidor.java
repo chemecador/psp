@@ -75,12 +75,18 @@ public class Servidor {
     private void gestionar() {
         try {
             //enviamos a cada cliente su id
+            //en el tablero, establecemos en el atributo String t "1"
             tablero.setT("1");
+            //lo convertimos a json con el método toJson de la librería gson
             json = gson.toJson(tablero);
+            //se lo enviamos al jugador 1
             out1.writeUTF(json);
+
+            //idem
             tablero.setT("2");
             json = gson.toJson(tablero);
             out2.writeUTF(json);
+
             //se elige quién comienza de manera aleatoria
             int turno = (int) Math.floor(Math.random() * 2 + 1);
             enviarATodos(String.valueOf(turno));

@@ -1,9 +1,14 @@
 package ejercicio4;
 
+/***
+ * Clase mensaje
+ */
 public class Mensaje {
+    //atributos
     private String s;
     private TipoUsuario tu;
 
+    //constructores
     public Mensaje(String s, TipoUsuario tu) {
         this.s = s;
         this.tu = tu;
@@ -12,6 +17,7 @@ public class Mensaje {
     public Mensaje() {
     }
 
+    //getters y setters
     public String getS() {
         return s;
     }
