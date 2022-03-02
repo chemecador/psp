@@ -39,7 +39,7 @@ public class PruebaRSAconAES {
             //Se cifra el texto con la clave secreta
             c = Cipher.getInstance("AES/ECB/PKCS5Padding");
             c.init(Cipher.ENCRYPT_MODE,claveSecreta);
-            byte textoPlano[] = "Texto de ejemplo".getBytes();
+            byte textoPlano[] = "hola".getBytes();
             byte textoCifrado[] = c.doFinal(textoPlano);
 
             //Se muestra por pantalla el texto
@@ -80,7 +80,5 @@ public class PruebaRSAconAES {
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
-
     }
-
 }
