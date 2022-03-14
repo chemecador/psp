@@ -1,0 +1,8 @@
+Para el ejercicio 4 es obligatorio ejecutar previamente el script liga.sql
+
+Este script contiene una cuenta de usuario (email: usuario, pass: usuario)
+y una cuenta de administrador (email: admin, pass: admin) 
+ya creadas para poder trabajar con la BBDD.
+Además, el campo password contiene los caracteres necesarios para almacenar contraseñas hasheadas.
+
+Ambas contraseñas, así como las nuevas de posteriores registros, están hasheadas con SHA-512.
